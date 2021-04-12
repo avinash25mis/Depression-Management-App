@@ -1,0 +1,66 @@
+{
+
+  "ossMapper":{
+
+    "nokia":{
+      "processedLocation":"C:/LDM/OSS_INPUT/NOKIA",
+      "fileLocation":"C:/LDM/OSS_INPUT/NOKIA",
+      "ratTypeHeaderList":{
+  "2G": {
+    "LAC": "lacTac",
+    "CELL_ID": "ciEci",
+    "SITE_ID": "siteId",
+    "NAME": "cellName",
+    "LONGITUDE": "longitude",
+    "LATITUDE": "latitude"
+  },
+  "3G": {
+    "LAC": "lacTac",
+    "CELL_ID": "ciEci",
+    "SITE_ID": "siteId",
+    "WCEL_NAME": "cellName",
+    "LONGITUDE": "longitude",
+    "LATITUDE": "latitude"
+  },
+  "4G": {
+    "TAC": "lacTac",
+    "EUTRA_CEL_ID": "ciEci",
+    "SITE_ID": "siteId",
+    "LNCEL_NAME": "cellName",
+    "LONGITUDE": "longitude",
+    "LATITUDE": "latitude"
+  }
+}
+    },
+  "huawawi":{
+    "fileLocation":"C/abdv/ag",
+    "ratTypeHeaderList": {
+      "2G": {
+        "LAC": "lacTac",
+        "CELL_ID": "ciEci",
+        "SITE_ID": "siteId",
+        "NAME": "cellName",
+        "LONGITUDE": "longitude",
+        "LATITUDE": "latitude"
+      },
+      "3G": {
+        "LAC": "lacTac",
+        "CELL_ID": "ciEci",
+        "SITE_ID": "siteId",
+        "WCEL_NAME": "cellName",
+        "LONGITUDE": "longitude",
+        "LATITUDE": "latitude"
+      },
+      "4G": {
+        "TAC": "lacTac",
+        "EUTRA_CEL_ID": "ciEci",
+        "SITE_ID": "siteId",
+        "LNCEL_NAME": "cellName",
+        "LONGITUDE": "longitude",
+        "LATITUDE": "latitude"
+      }
+    }
+  }
+  }
+
+}

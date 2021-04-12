@@ -1,0 +1,106 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script  th:src="@{/js/addDayPage.js}" ></script>
+</head>
+<style>
+  article, aside, figure, footer, header, hgroup,
+  menu, nav, section { display: block; }
+</style>
+
+
+<!-- Pills navs -->
+<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+    <li class="nav-item tabOne"  role="presentation">
+        <a
+                class="nav-link active"
+                id="tab-login"
+                data-mdb-toggle="pill"
+                href="/dashboard/home"
+                role="tab"
+                aria-controls="pills-login"
+                aria-selected="true"
+        >Dashboard</a
+        >
+    </li>
+    <li class="nav-item tabTwo" role="presentation">
+        <a
+                class="nav-link active"
+                id="tab-register"
+                data-mdb-toggle="pill"
+                href="/viewDayPage"
+                role="tab"
+                aria-controls="pills-login"
+                aria-selected="true"
+        >Day wise content</a
+        >
+    </li>
+</ul>
+
+<br> <br>
+
+<form th:object="${dayContent}" id="saveDayForm">
+    <div class="row">
+        <div class="col">
+            <input type="text"  th:field="*{day}" class="form-control" placeholder="Day">
+        </div>
+        <div class="col">
+            <input type="text"  th:field="*{time}" class="form-control" placeholder="Time">
+        </div>
+    </div>
+   <br> <br>
+    <div class="row">
+        <div class="col">
+            <input type="text"  th:field="*{title}" class="form-control" placeholder="Title">
+        </div>
+        <div class="col">
+            <input type="text" th:field="*{message}" class="form-control" placeholder="Message">
+        </div>
+    </div>
+    <br> <br>
+    <div class="row">
+        <div class="col">
+            <input type="text"  th:field="*{genre1}" class="form-control" placeholder="Genre 1">
+        </div>
+        <div class="col">
+            <input type="text" th:field="*{genre2}" class="form-control" placeholder="Genre 2">
+        </div>
+    </div>
+<br><br>
+
+    <div class="row">
+        <form method="POST" enctype="multipart/form-data" id="myform">
+        <div class="col">
+            <input type='file' id="file" onchange="readURL(this);" />
+            <input type="button" id="clearIt" value="X"/>
+            <input type='hidden' id="currentFileId" />
+            <input type='hidden' id="docList" />
+            <input type="button" id="saveDay" value="save"/>
+        </div>
+       </form >
+        <div class="col">
+            <input type="text"  th:field="*{link}" class="form-control" placeholder="Link">
+
+        </div>
+    </div>
+</form>
+
+<img id="attachedImage" src="#" alt="uploaded image" />
+
+
+
+
+</html>
+
+
+<script>
+
+</script>

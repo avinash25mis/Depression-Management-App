@@ -3,12 +3,6 @@
 
 <head>
 
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
     <script  th:src="@{/js/addDayPage.js}" ></script>
 </head>
 <style>
@@ -24,10 +18,11 @@
                 class="nav-link active"
                 id="tab-login"
                 data-mdb-toggle="pill"
-                href="/dashboard/home"
+                href="#"
                 role="tab"
                 aria-controls="pills-login"
                 aria-selected="true"
+                onclick="return getDashBoardPage();"
         >Dashboard</a
         >
     </li>
@@ -36,10 +31,11 @@
                 class="nav-link active"
                 id="tab-register"
                 data-mdb-toggle="pill"
-                href="/viewDayPage"
+                href="#"
                 role="tab"
                 aria-controls="pills-login"
                 aria-selected="true"
+                onclick="return getViewDayPage();"
         >Day wise content</a
         >
     </li>
@@ -80,10 +76,10 @@
         <form method="POST" enctype="multipart/form-data" id="myform">
         <div class="col">
             <input type='file' id="file" onchange="readURL(this);" />
-            <input type="button" id="clearIt" value="X"/>
+            <input type="button" id="clearIt" value="X" class="btn"/>
             <input type='hidden' id="currentFileId" />
             <input type='hidden' id="docList" />
-            <input type="button" id="saveDay" value="save"/>
+            <input type="button" id="saveDay" value="save" class="btn-primary"/>
         </div>
        </form >
         <div class="col">

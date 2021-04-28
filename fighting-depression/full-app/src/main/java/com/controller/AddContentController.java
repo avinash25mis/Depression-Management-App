@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/addData")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class AddContentController {
 
     @Autowired

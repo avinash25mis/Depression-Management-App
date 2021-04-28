@@ -2,16 +2,7 @@
 
 <html  xmlns:th="http://www.thymeleaf.org">
 <head>
-
-    <!-- Datatable CSS -->
-    <link th:rel="stylesheet" th:href="@{/css/datatables.css}"/>
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/datatables.js}"></script>
-
-
 </head>
 <body>
 
@@ -22,10 +13,11 @@
                 class="nav-link active"
                 id="tab-login"
                 data-mdb-toggle="pill"
-                href="/dashboard/home"
+                href="#"
                 role="tab"
                 aria-controls="pills-login"
                 aria-selected="true"
+                onclick="return getDashBoardPage();"
         >Dashboard</a
         >
     </li>
@@ -34,11 +26,12 @@
                 class="nav-link active"
                 id="tab-register"
                 data-mdb-toggle="pill"
-                href="/viewDayPage"
+                href="#"
                 role="tab"
                 aria-controls="pills-login"
                 aria-selected="true"
-        >Day wise content</a
+                onclick="return getAddDayPage();"
+        >Add Day Content</a
         >
     </li>
 </ul>
@@ -99,20 +92,18 @@ $(document).ready(function() {
         $('#example').DataTable({
         "processing": false,
         "serverSide": false,
-         "data":           data,
-        "deferRender":    true,
-            "scrollY":        200,
-            "scrollCollapse": true,
-            "scroller":       true,
+         "data":  data,
+
         
-        "columns": [
-            {"data": "day"},
-            {"data": "time"},
-            {"data": "title"},
-            {"data": "message"},
-            {"data": "genre1"},
-            {"data": "genre2"},
+       "columns": [
+            {"data": "day","width": "7%"},
+            {"data": "time","width": "10%"},
+            {"data": "title","width": "10%"},
+            {"data": "message","width": "20%"},
+            {"data": "genre1","width": "10%"},
+            {"data": "genre2","width": "10%"},
             {"data": "link",
+             "width": "20%",
             "render": function( data, type, full, meta) {
             if(type === 'display'){
                 data = '<a href="' + data + '">' + data + '</a>';

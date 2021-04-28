@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.project.app</groupId>
 	<artifactId>youAndMe</artifactId>
-	<name>starterPostgres</name>
-	<packaging>jar</packaging>
+	<name>youAndMe</name>
+	<packaging>war</packaging>
 	<description>youAndMe</description>
 	<version>1.0</version>
 
@@ -20,6 +20,7 @@
 		 <bootstrap.version>4.0.0-2</bootstrap.version>
 		 <webjars-locator.version>0.30</webjars-locator.version>
 		 <lombok.version>1.18.2</lombok.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 	</properties>
 
@@ -28,6 +29,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!--  <exclusions>
+          <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+            </exclusion>
+        </exclusions>-->
+
 		</dependency>
 
 
@@ -159,11 +167,6 @@
 
 
 
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jasper</artifactId>
-			<version>9.0.22</version>
-		</dependency>
 
 
 
@@ -194,17 +197,24 @@
 
 
 
-	<!--	<dependency>
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
--->
+
+
 			<dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <scope>runtime</scope>
             </dependency>
+
+<!--		<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-tomcat</artifactId>
+		<scope>provided</scope>
+	</dependency>-->
 
 
 

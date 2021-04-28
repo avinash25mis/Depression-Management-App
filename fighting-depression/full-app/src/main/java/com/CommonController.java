@@ -3,11 +3,14 @@ package com;
 
 
 import com.dao.CommonRepository;
+import com.dto.LoginDto;
 import com.dto.request.CommonRequestVO;
 import com.dto.response.GenericResponse;
+import com.model.DashboardContent;
 import com.model.DayWiseContent;
 import com.model.StoredFile;
 import com.service.CommonService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
@@ -39,11 +42,28 @@ private CommonService commonService;
     }
 
 
-    @GetMapping(value = {"/", "/index"})
+    @RequestMapping(value = {"/index"})
     public String index() {
 
         return  "index";
     }
+
+
+    @PostMapping(value = {"/login"})
+    public String login(@ModelAttribute LoginDto loginDto, ModelMap map) {
+        return getLatestDashboardData(map);
+    }
+
+
+    @PostMapping(value = {"/dashBoardPage"})
+    public String login(ModelMap map) {
+
+        return getLatestDashboardData(map);
+    }
+
+
+
+
 
 
 
@@ -51,11 +71,31 @@ private CommonService commonService;
     @RequestMapping("/viewDayPage")
     public String viewData(ModelMap map)
     {
-      /*  List all = commonRepository.findAll(DayWiseContent.class.getName());
-        map.put("dayDataList",all);*/
+
         return "viewDayPage";
     }
 
+
+
+
+    @PostMapping("/addDayPage")
+    public String addData(ModelMap map)
+    {
+        map.put("dayContent",new DayWiseContent());
+        return "addDayPage";
+    }
+
+
+
+    private String getLatestDashboardData(ModelMap map) {
+        List lastRecords = commonRepository.getLastRecords(DashboardContent.class.getName(), 1);
+        if(CollectionUtils.isNotEmpty(lastRecords)) {
+            map.put("content", lastRecords.get(0));
+        }else{
+            map.put("content", new DashboardContent());
+        }
+        return  "dashboard";
+    }
 
     @RequestMapping("/viewDayPage/json")
     @ResponseBody
@@ -66,14 +106,6 @@ private CommonService commonService;
         map.put("dayDataList",all);
         return all;
     }
-
-    @RequestMapping("/addDayPage")
-    public String addData(ModelMap map)
-    {
-        map.put("dayContent",new DayWiseContent());
-        return "addDayPage";
-    }
-
 
 
 

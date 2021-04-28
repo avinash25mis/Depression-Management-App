@@ -19,31 +19,14 @@ public class DashboardContentController {
     @Autowired
     private CommonRepository commonRepository;
 
-    @PostMapping(value = {"/login"})
-    public String login(@ModelAttribute LoginDto loginDto, ModelMap map) {
-       return getLatestDashboardData(map);
-    }
 
-    @GetMapping(value = {"/home"})
-    public String login(ModelMap map) {
-        return getLatestDashboardData(map);
-    }
 
-    private String getLatestDashboardData(ModelMap map) {
-        List lastRecords = commonRepository.getLastRecords(DashboardContent.class.getName(), 1);
-        if(CollectionUtils.isNotEmpty(lastRecords)) {
-            map.put("content", lastRecords.get(0));
-        }else{
-            map.put("content", new DashboardContent());
-        }
-        return  "dashboard";
-    }
-
+    @ResponseBody
     @PostMapping(value = {"/update"})
     public String login(@ModelAttribute DashboardContent content, ModelMap map) {
 
        commonRepository.saveOrUpdate(content);
-        return getLatestDashboardData(map);
+        return "saved";
 
     }
 }

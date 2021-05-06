@@ -2,25 +2,26 @@ package com;
 
 
 
+import com.ExceptionHandling.AppExceptions;
+import com.configuration.security.AppUserDetailService;
+import com.configuration.security.JwtService;
+import com.configuration.security.dto.AuthRequest;
 import com.dao.CommonRepository;
 import com.dto.LoginDto;
-import com.dto.request.CommonRequestVO;
-import com.dto.response.GenericResponse;
 import com.model.DashboardContent;
 import com.model.DayWiseContent;
 import com.model.StoredFile;
 import com.service.CommonService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Page;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.*;
 
@@ -34,6 +35,15 @@ private CommonRepository commonRepository;
 @Autowired
 private CommonService commonService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AppUserDetailService appUserDetailService;
+
+    @Autowired
+    private JwtService jwtService;
+
     @ResponseBody
     @GetMapping(value = {"/test"})
     public String test() {
@@ -41,16 +51,47 @@ private CommonService commonService;
        return  "tested";
     }
 
+    @RequestMapping(value = {"/login","/"})
+    public String firstPage(@RequestParam(value = "error",required = false)boolean error,ModelMap map) {
+       map.put("error",error);
+        return "login";
+    }
 
-    @RequestMapping(value = {"/index"})
-    public String index() {
+    @RequestMapping(value = {"/homePage"})
+    public String homePage(ModelMap map) {
+        map.put("refresh", false);
+        return "home";
+    }
 
-        return  "index";
+    @RequestMapping(value = {"/home"})
+    public String login(@ModelAttribute AuthRequest request,ModelMap map) {
+       if(request==null ||request.getUsername()==null|| request.getUsername()==null){
+           return  "redirect:/login?error=true";
+       }else {
+           try {
+               authenticationManager.authenticate(
+                       new UsernamePasswordAuthenticationToken(
+                               request.getUsername(),
+                               request.getPassword()
+                       )
+               );
+           } catch (BadCredentialsException e) {
+             return  "redirect:/login?error=true";
+
+           }
+           final UserDetails userDetails = appUserDetailService.loadUserByUsername(request.getUsername());
+           String jwt = jwtService.generateTokenFromUserDetail(userDetails);
+           map.put("refresh", true);
+           map.put("authToken", jwt);
+
+           return "home";
+       }
     }
 
 
     @PostMapping(value = {"/login"})
     public String login(@ModelAttribute LoginDto loginDto, ModelMap map) {
+
         return getLatestDashboardData(map);
     }
 
@@ -59,6 +100,19 @@ private CommonService commonService;
     public String login(ModelMap map) {
 
         return getLatestDashboardData(map);
+    }
+
+    @PostMapping(value = {"/dashBoard/json"})
+    public List dashboardJson(ModelMap map) {
+        List lastRecords = commonRepository.getLastRecords(DashboardContent.class.getName(), 1);
+        return lastRecords;
+    }
+
+
+    @PostMapping(value = {"/delete/{id}"})
+    public String delete(@PathVariable(value = "id")Long id, ModelMap map) {
+        commonRepository.deleteDayData(id);
+        return  "forward:/viewDayPage";
     }
 
 
@@ -75,13 +129,48 @@ private CommonService commonService;
         return "viewDayPage";
     }
 
+    @RequestMapping("/viewDayPage/data")
+    @ResponseBody
+    public List viewDataJson()
+    {
+        List all = commonRepository.findAllDayContent();
+        return all;
+    }
+
+    @RequestMapping("/daysData/fromTo")
+    @ResponseBody
+    @Transactional(readOnly = true)
+    public List viewSelectiveData(@RequestParam Integer startDay,@RequestParam Integer endDay)
+    {
+        List<DayWiseContent> all = commonRepository.findDaysDataInRange(startDay,endDay);
+
+        return all;
+    }
+
+
+
+
 
 
 
     @PostMapping("/addDayPage")
-    public String addData(ModelMap map)
+    public String addData(@RequestParam(required = false,name = "id")Long id,ModelMap map)
     {
-        map.put("dayContent",new DayWiseContent());
+        DayWiseContent content=null;
+        if(id!=null) {
+            content = commonRepository.findById(DayWiseContent.class, id);
+        }
+
+        if(content==null){
+            content=new DayWiseContent();
+        }
+        if(content.getFileList()!=null){
+            for(StoredFile file:content.getFileList()){
+               // file.setContent2(file.getContent().toString());
+            }
+        }
+
+        map.put("dayContent",content);
         return "addDayPage";
     }
 
@@ -97,15 +186,7 @@ private CommonService commonService;
         return  "dashboard";
     }
 
-    @RequestMapping("/viewDayPage/json")
-    @ResponseBody
-    public List viewDataJson(ModelMap map)
-    {
-        List<DayWiseContent> all = commonRepository.findAll(DayWiseContent.class.getName());
 
-        map.put("dayDataList",all);
-        return all;
-    }
 
 
 

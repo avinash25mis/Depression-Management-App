@@ -1,0 +1,80 @@
+<html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link th:rel="stylesheet" th:href="@{/css/datatables.css}"/>
+    <link th:rel="stylesheet" th:href="@{/css/home.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/datatables.js}"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script th:src="@{/js/foggy.js}"></script>
+    <script  th:src="@{/js/notify.js}" ></script>
+    <script  th:src="@{/js/notify.min.js}" ></script>
+    <script  th:src="@{/js/home.js}" ></script>
+
+
+
+
+
+
+</head>
+<div th:if="${refresh}">
+<input type="hidden" id="authTokenId" th:value="${authToken}">
+</div>
+<body class="indexBody">
+
+<div class="navbar">
+    <a href="#"  onclick="return getHomePage();">Home Page</a>
+    <a href="#"  onclick="return getViewDayPage();">View Days Data</a>
+    <a href="#"  onclick="return getDashBoardPage();">View Dashboard</a>
+    <a href="#"  onclick="return getAddDayPage();">Add Day Data</a>
+    <a href="#">Logout</a>
+</div>
+<div id="loaderDiv" class="loader" style="display: none;"></div>
+<div class="parentAppDiv">
+<div id="dashboardPageId"></div>
+<div id="viewDayPageId"></div>
+<div id="addDayPageId"></div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" style="top:35%;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body" id="bodyOfModal">
+
+                <div class="modal-header">
+
+                </div>
+
+                <div id="imageOfModal"></div>
+                <input  id="fieldOfModal" type="hidden"></div>
+                <div id="alertOfModal"></div>
+
+            <div class="modal-footer">
+                <button type="button"  id="modalCloseButton" class="btn btn-secondary" onclick="hideModal()">close</button>
+                <button type="button" id="modalConfirmButton" class="btn btn-primary" onclick="confirmDecision()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+</body>
+
+
+
+</html>
+
+<script>
+
+
+
+</script>
+

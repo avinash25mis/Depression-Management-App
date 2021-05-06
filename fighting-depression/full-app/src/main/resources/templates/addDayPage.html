@@ -5,92 +5,117 @@
 
     <script  th:src="@{/js/addDayPage.js}" ></script>
 </head>
-<style>
-  article, aside, figure, footer, header, hgroup,
-  menu, nav, section { display: block; }
-</style>
+
+<body>
 
 
-<!-- Pills navs -->
-<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-    <li class="nav-item tabOne"  role="presentation">
-        <a
-                class="nav-link active"
-                id="tab-login"
-                data-mdb-toggle="pill"
-                href="#"
-                role="tab"
-                aria-controls="pills-login"
-                aria-selected="true"
-                onclick="return getDashBoardPage();"
-        >Dashboard</a
-        >
-    </li>
-    <li class="nav-item tabTwo" role="presentation">
-        <a
-                class="nav-link active"
-                id="tab-register"
-                data-mdb-toggle="pill"
-                href="#"
-                role="tab"
-                aria-controls="pills-login"
-                aria-selected="true"
-                onclick="return getViewDayPage();"
-        >Day wise content</a
-        >
-    </li>
-</ul>
 
-<br> <br>
 
 <form th:object="${dayContent}" id="saveDayForm">
-    <div class="row">
-        <div class="col">
-            <input type="text"  th:field="*{day}" class="form-control" placeholder="Day">
-        </div>
-        <div class="col">
-            <input type="text"  th:field="*{time}" class="form-control" placeholder="Time">
-        </div>
-    </div>
-   <br> <br>
-    <div class="row">
-        <div class="col">
-            <input type="text"  th:field="*{title}" class="form-control" placeholder="Title">
-        </div>
-        <div class="col">
-            <input type="text" th:field="*{message}" class="form-control" placeholder="Message">
-        </div>
-    </div>
-    <br> <br>
-    <div class="row">
-        <div class="col">
-            <input type="text"  th:field="*{genre1}" class="form-control" placeholder="Genre 1">
-        </div>
-        <div class="col">
-            <input type="text" th:field="*{genre2}" class="form-control" placeholder="Genre 2">
-        </div>
-    </div>
-<br><br>
+    <input type="hidden"  th:field="*{id}" />
+    <input type="hidden" id="docList" name="idList"/>
 
-    <div class="row">
-        <form method="POST" enctype="multipart/form-data" id="myform">
-        <div class="col">
-            <input type='file' id="file" onchange="readURL(this);" />
-            <input type="button" id="clearIt" value="X" class="btn"/>
-            <input type='hidden' id="currentFileId" />
-            <input type='hidden' id="docList" />
-            <input type="button" id="saveDay" value="save" class="btn-primary"/>
+    <div class="form-group row">
+          <div class="col-xs-4">
+              <label  for="day">Day</label>
+            <input type="number" id="day" th:field="*{day}" min="0" max="90" class="form-control" required/>
+          </div>
+
+
+        <div class="col-xs-2">
+            <label >Hours :</label>
+            <input type="number" id="hours" min="0" max="23" class="form-control" required>
         </div>
-       </form >
-        <div class="col">
-            <input type="text"  th:field="*{link}" class="form-control" placeholder="Link">
+
+        <div class="col-xs-2">
+            <label >Minutes</label>
+            <input type="number" id="minutes" min="0" max="59" class="form-control" required>
+            <input type="hidden" id="time" th:field="*{time}"  />
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <div class="col-xs-4">
+            <label  for="title">Title</label>
+            <input type="text" id="title" th:field="*{title}" class="form-control"/>
+
+        </div>
+        <div class="col-xs-4">
+            <label  for="message">Message</label>
+            <input type="text" id="message" th:field="*{message}" class="form-control" />
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-xs-4">
+            <label  for="genre1">Genere 1</label>
+            <input type="text" id="genre1"  th:field="*{genre1}" class="form-control"/>
+
+        </div>
+        <div class="col-xs-4">
+            <label for="genre2">Genere 2</label>
+            <input type="text" id="genre2" th:field="*{genre2}" class="form-control" />
+
+        </div>
+
+
+    </div>
+
+
+    <div class="form-group row">
+
+        <div class="col-xs-4">
+            <label  for="link">Link</label>
+            <input  type="url" id="link" th:field="*{link}" class="form-control" />
+
+        </div>
+
+        <div class="col-xs-4">
+            <br>
+                 <input type="checkbox" id="downloadId" name="download" th:checked="${download}"/>
+                 <label  for="downloadId">Allow Download</label>
+        </div>
+
+        <div class="col-xs-2">
+
+            <img id="attachedImage"  src="#" style="width:150;height:150"/>
 
         </div>
     </div>
 </form>
 
-<img id="attachedImage" src="#" alt="uploaded image" />
+<form method="POST" enctype="multipart/form-data" id="myform">
 
+    <div class="form-group row">
+
+        <div class="col-xs-4">
+            <input type="button" id="saveDay" onclick="saveDayData()" value="save" class="btn btn-primary btn-block btn-large"/>
+
+        </div>
+
+
+
+        <div class="col-xs-2">
+            <input type="file" id="file" accept="image/*" onchange="readURL(this);" />
+            <input type="hidden" id="currentFileId" />
+
+        </div>
+        <div class="col-xs-2">
+
+            <input type="button" id="clearIt" value="X" class="btn"/>
+
+        </div>
+
+    </div>
+
+
+</form>
+
+
+
+</body>
 
 
 
@@ -99,4 +124,32 @@
 
 <script>
 
+
+
+
+
+
 </script>
+
+<style>
+
+
+
+
+.my-error-class {
+    color:#FF0000;
+}
+
+
+.my-valid-class {
+    color:#00CC00; /* green */
+}
+
+#saveDay{
+
+
+}
+
+
+
+</style>

@@ -5,19 +5,23 @@ import com.model.DayWiseContent;
 import com.model.StoredFile;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.rowset.serial.SerialBlob;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
 @RequestMapping("/addData")
 
-public class AddContentController {
+public class ContentController {
 
     @Autowired
     private CommonRepository commonRepository;
@@ -28,7 +32,7 @@ public class AddContentController {
    public Long uploadImage(@RequestParam(name = "file") MultipartFile multipartImage) throws Exception {
         StoredFile file = new StoredFile();
         file.setName(multipartImage.getOriginalFilename());
-        file.setContent(multipartImage.getBytes());
+        file.setContent(new SerialBlob(multipartImage.getBytes()));
         StoredFile storedFile = commonRepository.saveOrUpdate(file);
         return storedFile.getId();
     }
@@ -47,11 +51,26 @@ public class AddContentController {
     }
 
 
-    @GetMapping(value = "/getFile/{id}",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public byte[] getFile(@PathVariable(name = "id") Long id) throws Exception {
-        StoredFile storedFile = commonRepository.findById(StoredFile.class,id);
+    @GetMapping(value = "/getFile/{id}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<byte[]> getFile(@PathVariable(name = "id") Long id, HttpServletResponse response) throws Exception {
+            StoredFile storedFile = commonRepository.findById(StoredFile.class,id);
 
-        //InputStreamResource resource=new InputStreamResource(new FileInputStream(storedFile.getContent())
-        return storedFile.getContent();
+        byte[] imageBytes = null;
+        byte[] base64 = null;
+        long length = 0;
+        String fileName = "";
+        if (storedFile!=null) {
+            fileName=storedFile.getName();
+            imageBytes = storedFile.getContent().getBytes(1,
+                    (int) storedFile.getContent().length());
+
+            base64= Base64.getEncoder().encode(imageBytes);
+            length=base64.length;
+        }
+
+
+        return ResponseEntity.ok().contentLength(length).body(base64);
+
     }
 }

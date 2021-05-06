@@ -1,7 +1,7 @@
 package com.dao;
 
 
-import com.model.AppUser;
+import com.model.common.AppUser;
 import com.model.StoredFile;
 import com.model.common.IEntity;
 import org.apache.commons.collections.CollectionUtils;
@@ -18,7 +18,7 @@ import javax.persistence.Query;
 import java.util.*;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class CommonRepository {
 
     private static Logger logger = LoggerFactory.getLogger(CommonRepository.class);
@@ -29,7 +29,7 @@ public class CommonRepository {
     EntityManager em;
 
 
-
+    @Transactional
    public <T extends IEntity> T saveOrUpdate(T entity){
         T managedEntity=null;
         if(entity!=null && entity.getId()==null) {
@@ -41,7 +41,7 @@ public class CommonRepository {
         return managedEntity;
     }
 
-
+    @Transactional
     public <T extends IEntity> void delete(T entity){
 
        if(entity!=null && entity.getId()!=null) {
@@ -50,7 +50,7 @@ public class CommonRepository {
 
     }
 
-
+    @Transactional
    public <T extends IEntity> List<T> saveOrUpdateList(List<T> entityList){
       List<T> managedEntityList=new ArrayList<>();
        for(T entity:entityList) {
@@ -74,6 +74,25 @@ public class CommonRepository {
     public List  findAll(String className){
        String queryString="From "+className;
         Query query = em.createQuery(queryString);
+        List resultList = query.getResultList();
+        return resultList;
+
+    }
+
+    public List  findAllDayContent(){
+       String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.download,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f order by d.day,d.time";
+        Query query = em.createQuery(queryString);
+        List resultList = query.getResultList();
+        return resultList;
+
+    }
+
+
+    public List  findDaysDataInRange(Integer startDay,Integer endDay){
+        String queryString="From DayWiseContent where day >=:startDay AND day <=:endDay";
+        Query query = em.createQuery(queryString);
+        query.setParameter("startDay",startDay);
+        query.setParameter("endDay",endDay);
         List resultList = query.getResultList();
         return resultList;
 
@@ -142,15 +161,10 @@ public class CommonRepository {
         return list;
     }
 
-
-
-
-
-
-
-
-
-
-
-
+   @Transactional
+    public void deleteDayData(Long id) {
+        Query query = em.createQuery("DELETE from DayWiseContent  where id =:id");
+        query.setParameter("id",id);
+        query.executeUpdate();
+    }
 }

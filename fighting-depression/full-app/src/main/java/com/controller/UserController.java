@@ -2,7 +2,7 @@ package com.controller;
 
 import com.dao.CommonRepository;
 import com.dto.response.GenericResponse;
-import com.model.AppUser;
+import com.model.common.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;

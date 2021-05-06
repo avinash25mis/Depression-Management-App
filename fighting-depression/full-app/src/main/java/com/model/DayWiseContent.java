@@ -28,11 +28,11 @@ public class DayWiseContent implements IEntity {
     private String genre1;
     private String genre2;
     private String link;
+    private Boolean download;
     @Transient
     private List<Long> idList;
 
    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-   @JsonIgnore
    private List<StoredFile> fileList;
 
 

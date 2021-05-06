@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Blob;
+
 @Getter
 @Setter
 @Entity
@@ -19,8 +21,11 @@ public class StoredFile implements IEntity {
     private String name;
     private String extension;
     private String description;
-    @Lob
-    byte[] content;
+
+    private Blob content;
+
+    @Transient
+    private String content2;
 
 
 }

@@ -1,4 +1,4 @@
-package com.model;
+package com.model.common;
 
 import com.model.common.IEntity;
 import lombok.Getter;
@@ -38,6 +38,7 @@ public class AppUser implements IEntity {
 
    private boolean active;
 
-
+    @ManyToMany( fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    private List<UserRole> userRole=new ArrayList<UserRole>();
 
 }

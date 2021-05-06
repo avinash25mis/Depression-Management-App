@@ -1,3 +1,4 @@
+insert into day_wise_content_file_list values (1,1);
 
 INSERT INTO public.user_role (user_role_id, role_code, role_name) VALUES (1, 'ADMIN', 'ADMIN');
 INSERT INTO public.user_role (user_role_id, role_code, role_name) VALUES (2, 'VIEW', 'VIEW');

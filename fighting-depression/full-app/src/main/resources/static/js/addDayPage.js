@@ -31,6 +31,9 @@ function uploadData(){
            $.ajax({
               url: '/addData/upload',
               type: 'POST',
+            headers:{
+            "Authorization": "Bearer " + authToken
+             },
               data: fd,
               contentType: false,
               processData: false,

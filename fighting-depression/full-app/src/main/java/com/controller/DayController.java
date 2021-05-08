@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,18 +99,22 @@ public class DayController {
         }
 
         String fileName = originalImageName+RandomUtils.nextInt() + "." + imageSuffix;
-        File file = new File(fileName);
+
 
         try {
             // Try to compress and save the image first
-            Thumbnails.of(image.getInputStream()).scale(0.7f).outputQuality(0.25f).toFile(file);
-            byte[] bytes = FileUtils.readFileToByteArray(file);
+            ByteArrayOutputStream bOutput = new ByteArrayOutputStream(12);
+          //  Thumbnails.of(image.getInputStream()).scale(0.7f).outputQuality(0.25f).toOutputStream(bOutput);
+            Thumbnails.of(image.getInputStream()).scale(0.5f).outputQuality(0.20f).toOutputStream(bOutput);
+            byte[] bytes = bOutput.toByteArray();
             base64 = Base64.getEncoder().encode(bytes);
+            //FileUtils.writeByteArrayToFile(new File(fileName), bytes);
+
         } catch (Exception e) {
             // Failed to use the way that spring mvc comes with
-            image.transferTo(file);
+
         }
-       // file=null;
+
         return base64;
     }
 }

@@ -7,6 +7,7 @@ import com.configuration.security.AppUserDetailService;
 import com.configuration.security.JwtService;
 import com.configuration.security.dto.AuthRequest;
 import com.dao.CommonRepository;
+import com.dto.DayContentDto;
 import com.dto.LoginDto;
 import com.model.DashboardContent;
 import com.model.DayWiseContent;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @Controller
@@ -140,9 +142,17 @@ private CommonService commonService;
     @RequestMapping("/daysData/fromTo")
     @ResponseBody
     @Transactional(readOnly = true)
-    public List viewSelectiveData(@RequestParam Integer startDay,@RequestParam Integer endDay)
-    {
+    public List viewSelectiveData(@RequestParam Integer startDay,@RequestParam Integer endDay) throws SQLException {
         List<DayWiseContent> all = commonRepository.findDaysDataInRange(startDay,endDay);
+        for(DayWiseContent dayWiseContent:all){
+            if(CollectionUtils.isNotEmpty(dayWiseContent.getFileList())){
+                for(StoredFile file:dayWiseContent.getFileList()){
+                    if(file.getContent()!=null){
+                        file.setBase64(file.getContent().getBytes(1, (int) file.getContent().length()));
+                    }
+                }
+            }
+        }
 
         return all;
     }
@@ -156,19 +166,19 @@ private CommonService commonService;
     @PostMapping("/addDayPage")
     public String addData(@RequestParam(required = false,name = "id")Long id,ModelMap map)
     {
-        DayWiseContent content=null;
+        DayContentDto content=null;
         if(id!=null) {
-            content = commonRepository.findById(DayWiseContent.class, id);
+            List<DayContentDto>list = commonRepository.findAllDayContentById(id);
+            if(CollectionUtils.isNotEmpty(list)){
+                content=list.get(0);
+            }
+
         }
 
         if(content==null){
-            content=new DayWiseContent();
+            content=new DayContentDto();
         }
-        if(content.getFileList()!=null){
-            for(StoredFile file:content.getFileList()){
-               // file.setContent2(file.getContent().toString());
-            }
-        }
+
 
         map.put("dayContent",content);
         return "addDayPage";

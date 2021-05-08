@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/favicon.ico","/h2-console/**","/h2-console/login.do","/authenticate","/home","/login","/").permitAll()
+                .antMatchers("/h2-console/**","/authenticate","/home","/login","/").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().
                 sessionCreationPolicy(SessionCreationPolicy.STATELESS);//telling not to create session after login
@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/favicon.ico/**","/resources/**","/webjars/**", "/static/**", "/css/**","/static/css/**","/static/js/**", "/js/**", "/images/**");
+                .antMatchers("/resources/**","/webjars/**", "/static/**", "/css/**","/static/css/**","/static/js/**", "/js/**", "/images/**");
     }
 
     @Bean

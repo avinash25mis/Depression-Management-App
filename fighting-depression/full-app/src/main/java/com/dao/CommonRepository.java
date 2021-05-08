@@ -88,6 +88,16 @@ public class CommonRepository {
     }
 
 
+    public List  findAllDayContentById(Long id){
+        String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.download,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f where d.id=:id";
+        Query query = em.createQuery(queryString);
+        query.setParameter("id",id);
+        List resultList = query.getResultList();
+        return resultList;
+
+    }
+
+
     public List  findDaysDataInRange(Integer startDay,Integer endDay){
         String queryString="From DayWiseContent where day >=:startDay AND day <=:endDay";
         Query query = em.createQuery(queryString);
@@ -143,14 +153,19 @@ public class CommonRepository {
 
 
 
-    public List<StoredFile> getAllStoredFile(Long id){
-        List<StoredFile> list= new ArrayList<>();
+
+
+    public List<Long> getAllStoredFileIds(Long id){
+        List<Long> list= new ArrayList<>();
         AppUser user=null;
-        Query query = em.createQuery("from DayWiseContent d inner join d.fileList f where d.id=:id");
+        Query query = em.createQuery("SELECT f.id from DayWiseContent d inner join d.fileList f where d.id=:id");
         query.setParameter("id",id);
         list=query.getResultList();
         return list;
     }
+
+
+
 
     public List<StoredFile> getAllStoredFileWithId(List<Long> idList){
         List<StoredFile> list= new ArrayList<>();
@@ -166,5 +181,13 @@ public class CommonRepository {
         Query query = em.createQuery("DELETE from DayWiseContent  where id =:id");
         query.setParameter("id",id);
         query.executeUpdate();
+    }
+
+    @Transactional
+    public int deleteStoredFiles(List<Long> idList) {
+        Query query = em.createQuery("DELETE from StoredFile  where id IN (:idList)");
+        query.setParameter("idList",idList);
+        int count = query.executeUpdate();
+        return count;
     }
 }

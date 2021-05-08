@@ -30,9 +30,10 @@ public class DayWiseContent implements IEntity {
     private String link;
     private Boolean download;
     @Transient
-    private List<Long> idList;
+    private List<Long> docList;
 
-   @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+   @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+   @JoinColumn(name = "day_id")
    private List<StoredFile> fileList;
 
 

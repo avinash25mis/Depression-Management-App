@@ -2,9 +2,7 @@ var idList=[];
  var div=$("#addDayPageId");
 
     function readURL(input) {
-  $("#loaderDiv").show();
-        if (input.files && input.files[0]) {
-             uploadData()
+      if (input.files && input.files[0]) {
              var reader = new FileReader();
               reader.onload = function (e) {
                  $('#attachedImage').attr('src', e.target.result);
@@ -19,7 +17,7 @@ var idList=[];
 
 
 function uploadData(){
-
+  startAppLoader(div);
     var uploaded=false;
         var fd = new FormData();
         var files = $('#file')[0].files;
@@ -37,16 +35,14 @@ function uploadData(){
               data: fd,
               contentType: false,
               processData: false,
-              beforeSend: function () {
-                $("#loaderDiv").show();
-              },
 
             success: function (data) {
-              $("#loaderDiv").hide();
-            $("#currentFileId").val(data)
-            $("#idList").val(data);
-            idList.push(data);
+            $("#currentDocId").val(data)
+             idList=[];
+             idList.push(data);
             uploaded= true;
+            callingSave();
+
         },
          error: function (jqXHR) {
           
@@ -55,6 +51,8 @@ function uploadData(){
         },
 
   });
+  }else{
+  callingSave();
   }
 
 return uploaded;
@@ -63,47 +61,52 @@ return uploaded;
 
 
 function saveDayData(){
+
     var hours= $("#hours").val();
     var minutes= $("#minutes").val();
     var time=hours+":"+minutes;
    $("#time").val(time);
-     $('#saveDayForm').validate({
+    var dayData = $('#saveDayForm');
+     dayData.validate({
           errorClass: "my-error-class",
           validClass: "my-valid-class"
          });
 
-       $("#docList").val(idList);
-
-        var dayData = $('#saveDayForm');
-
-        if(!dayData.valid()){
+     if(dayData.length < 0 || !dayData.valid()){
 
           return;
-         }
+        }
 
-          if(dayData.length > 0 ){
-        startAppLoader(div);
+         var uploaded= uploadData();
 
+}
+
+
+function callingSave(){
+$("#docList").val(idList);
            $.ajax({
               url: "/addData/addDayData",
               type: "POST",
             headers:{
             "Authorization": "Bearer " + authToken
              },
-              data: dayData.serialize(),
+              data: $('#saveDayForm').serialize(),
 
         success: function (data) {
-        stopAppLoader(div)
+        stopAppLoader(div);
+         $("#file").val("");
           $.notify("Day Data Saved", "success");
-          idList=[];
+          $("#dayId").val(data);
+
         },
        error: function (jqXHR) {
-        alert(jqXHR.responseJSON.message);
+         stopAppLoader(div);
+         alert(jqXHR.responseJSON.message);
 
         },
 
     });
- }
+
 
 }
 
@@ -112,13 +115,14 @@ function saveDayData(){
 
 
 
-
-
 $(document).ready(function() {
+var currentDocId=$("#currentDocId").val();
+if(currentDocId!=undefined && currentDocId!=""){
+   idList.push(currentDocId);
+ fetchImage(currentDocId);
+ }
 
- fetchImage(7);
-
- var retrivedTime =$("#time").val()
+ var retrivedTime =$("#time").val();
  if(retrivedTime!=""){
  var res = retrivedTime.split(":");
  $("#hours").val(res[0]);

@@ -1,5 +1,6 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.model.common.IEntity;
 import lombok.Data;
 import lombok.Getter;
@@ -21,11 +22,12 @@ public class StoredFile implements IEntity {
     private String name;
     private String extension;
     private String description;
-
-    private Blob content;
-
+    @JsonIgnore
+    Blob content;
     @Transient
-    private String content2;
+    byte[] base64;
+
+
 
 
 }

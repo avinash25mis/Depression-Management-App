@@ -122,6 +122,7 @@ var authToken="";
           $("#addDayPageId").html("");
           $("#viewDayPageId").html(jqXHR);
           $("#dashboardPageId").html("");
+            $.notify("Day Data Deleted", "success");
             },
            error: function (jqXHR) {
             alert(jqXHR.responseJSON.message);

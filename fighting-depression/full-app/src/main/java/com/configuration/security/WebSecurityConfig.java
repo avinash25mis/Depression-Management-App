@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/h2-console/**","/authenticate","/home","/login","/").permitAll()
+                .antMatchers("/h2-console/**","/authenticate","/home","/login","/","/dashBoard/json","/daysData/fromTo").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().
                 sessionCreationPolicy(SessionCreationPolicy.STATELESS);//telling not to create session after login

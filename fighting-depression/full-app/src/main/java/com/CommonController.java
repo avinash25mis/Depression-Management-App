@@ -104,11 +104,7 @@ private CommonService commonService;
         return getLatestDashboardData(map);
     }
 
-    @PostMapping(value = {"/dashBoard/json"})
-    public List dashboardJson(ModelMap map) {
-        List lastRecords = commonRepository.getLastRecords(DashboardContent.class.getName(), 1);
-        return lastRecords;
-    }
+
 
 
     @PostMapping(value = {"/delete/{id}"})
@@ -139,7 +135,16 @@ private CommonService commonService;
         return all;
     }
 
-    @RequestMapping("/daysData/fromTo")
+
+    @GetMapping(value = {"/dashBoard/json"})
+    @ResponseBody
+    public List dashboardJson(ModelMap map) {
+        List lastRecords = commonRepository.getLastRecords(DashboardContent.class.getName(), 1);
+        return lastRecords;
+    }
+
+
+    @GetMapping("/daysData/fromTo")
     @ResponseBody
     @Transactional(readOnly = true)
     public List viewSelectiveData(@RequestParam Integer startDay,@RequestParam Integer endDay) throws SQLException {

@@ -4,29 +4,36 @@
 
 <head>
     <title>You And Me</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap" rel="stylesheet">
+    <link th:rel="stylesheet" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
-<div class="container">
+<div class="main-container">
 
     <form th:action="@{/home}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading" th:text="Welcome"></h3>
-        <br/>
+        <h2 class="" th:text="Welcome"></h2>
 
-        <input type="text" id="user_name" name="username" placeholder="User Name"
-               class="form-control"/> <br/>
-        <input type="password" th:placeholder="Password"
-               id="password" name="password" class="form-control"/> <br/>
+            <div class="login-container">
 
-        <div align="center" th:if="${error}">
-            <p style="font-size: 20; color: #FF1C19;">User Name or Password invalid, please verify</p>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
-                th:text="Login"></button>
+                <div class="login-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+
+                <input type="text" id="user_name" name="username" placeholder="User Name"
+                />
+                <input type="password" placeholder="Password"
+                       id="password" name="password" />
+
+                <div th:if="${error}">
+                    <p class="error-msg">User Name or Password invalid, please verify</p>
+                </div>
+                <button name="Submit" value="LOGIN" type="Submit"
+                        th:text="Login"></button>
+
+            </div>
     </form>
 </div>
 </body>

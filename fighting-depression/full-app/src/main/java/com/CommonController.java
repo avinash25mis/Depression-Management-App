@@ -54,8 +54,9 @@ private CommonService commonService;
     }
 
     @RequestMapping(value = {"/login","/"})
-    public String firstPage(@RequestParam(value = "error",required = false)boolean error,ModelMap map) {
+    public String firstPage(@RequestParam(value = "error",required = false)boolean error,@RequestParam(value = "logout",required = false)boolean logout,Map map) {
        map.put("error",error);
+       map.put("logout",logout);
         return "login";
     }
 
@@ -68,7 +69,7 @@ private CommonService commonService;
     @RequestMapping(value = {"/home"})
     public String login(@ModelAttribute AuthRequest request,ModelMap map) {
        if(request==null ||request.getUsername()==null|| request.getUsername()==null){
-           return  "redirect:/login?error=true";
+           return  "redirect:/login?logout=true";
        }else {
            try {
                authenticationManager.authenticate(

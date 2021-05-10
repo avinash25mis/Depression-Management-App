@@ -16,7 +16,7 @@
 <div class="main-container">
 
     <form th:action="@{/home}" method="POST" class="form-signin">
-        <h2  th:text="Welcome" ></h2>
+
 
             <div class="login-container">
 
@@ -28,6 +28,9 @@
 
                 <div th:if="${error}">
                     <p class="error-msg">Login with valid username & password</p>
+                </div>
+                <div th:if="${logout}">
+                    <p class="error-msg">you have been logged out</p>
                 </div>
                 <button name="Submit" value="LOGIN" type="Submit"
                         th:text="Login"></button>

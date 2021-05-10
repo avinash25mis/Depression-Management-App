@@ -1,4 +1,4 @@
-var authToken="";
+
 
 
 
@@ -219,7 +219,7 @@ var authToken="";
 
 $( document ).ready(function() {
 if($("#authTokenId").val()!=undefined){
-   authToken=$("#authTokenId").val();
+   var authToken=$("#authTokenId").val();
    window.sessionStorage.setItem("authTokenId", authToken);
 
    }

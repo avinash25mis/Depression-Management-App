@@ -3,7 +3,9 @@
 
 
 <body>
-
+<div class="banner">
+    <h3>Dashboard Data</h3>
+</div>
 
 <br> <br>
 
@@ -12,41 +14,41 @@
 
 
 
-<div class="testbox">
-
-    <div class="banner">
-        <h3>Dashboard content</h3>
-    </div>
-    <form id="dashboardFormId" th:object="${content}">
+ </div>
+      <form id="dashboardFormId" th:object="${content}">
         <input type="hidden" th:field="*{id}"  />
-        <div class="row">
-            <div class="col">
-                <textarea th:field="*{message}" class="form-control" placeholder="Declaration"> </textarea>
+        <div class="form-group row">
+            <div class="col-xs-6">
+                <label  for="declaration">Declaration</label>
+                <textarea id="declaration" th:field="*{message}" class="form-control" placeholder="Declaration"> </textarea>
             </div>
 
         </div>
         <br>
 
-        <div class="row">
-            <div class="col">
-                <textarea  th:field="*{terms}" class="form-control" placeholder="Aggrement"></textarea>
+        <div class="form-group row">
+            <div class="col-xs-6">
+                <label  for="aggrement">Aggrement</label>
+                <textarea id="aggrement" th:field="*{terms}" class="form-control" placeholder="Aggrement"></textarea>
             </div>
 
         </div>
        <br>
-        <div class="row">
-            <div class="col">
-                <textarea th:field="*{policy}" class="form-control" placeholder="Privacy Policy"></textarea>
+        <div class="form-group row">
+            <div class="col-xs-6">
+                <label  for="privacyPolicy">Privacy Policy</label>
+                <textarea id="privacyPolicy"   th:field="*{policy}" class="form-control" placeholder="Privacy Policy"></textarea>
             </div>
 
         </div>
 
         <br>
-
-        <div class="btn-block">
-            <button type="button"  onclick="dashBoardSaveFunction()"  class="btn btn-primary btn-block btn-large">APPLY</button>
+        <div class="form-group row">
+        <div class="col-xs-6">
+            <button type="button"  onclick="dashBoardSaveFunction()"  class="btn btn-primary btn-block btn-large">UPDATE</button>
         </div>
-    </form>
+        </div>
+     </form>
 </div>
 </body>
 </html>
@@ -61,7 +63,7 @@ function dashBoardSaveFunction(){
               url: "/dashboard/update",
               type: "POST",
             headers:{
-            "Authorization": "Bearer " + authToken
+            "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
              },
              data: formData,
 

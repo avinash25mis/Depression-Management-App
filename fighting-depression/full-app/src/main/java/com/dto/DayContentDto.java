@@ -10,7 +10,7 @@ public class DayContentDto {
     public DayContentDto() {
     }
 
-    public DayContentDto(Long id, Integer day, String time, String title, String message, String genre1, String genre2, String link, Boolean allowDownload, Long docId, String name) {
+    public DayContentDto(Long id, Integer day, String time, String title, String message, String genre1, String genre2, String link, Boolean download, Long docId, String name) {
         this.id = id;
         this.day = day;
         this.time = time;

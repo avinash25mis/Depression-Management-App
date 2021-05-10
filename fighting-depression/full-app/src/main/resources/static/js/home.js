@@ -8,7 +8,7 @@ var authToken="";
                    url: "/homePage",
                    type: "GET",
                    headers:{
-                      "Authorization": "Bearer " + authToken
+                      "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
                            },
 
          success: function (jqXHR) {
@@ -36,7 +36,7 @@ var authToken="";
                    url: "/addDayPage",
                    type: "POST",
                    headers:{
-                               "Authorization": "Bearer " + authToken
+                               "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
                            },
                    data: { "id": id} ,
 
@@ -64,7 +64,7 @@ var authToken="";
               url: "/viewDayPage",
               type: "POST",
                  headers:{
-            "Authorization": "Bearer " + authToken
+            "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
              },
 
        success: function (jqXHR) {
@@ -91,7 +91,7 @@ var authToken="";
               url: "/dashBoardPage",
               type: "POST",
              headers:{
-            "Authorization": "Bearer " + authToken
+            "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
              },
        success: function (jqXHR) {
           stopAppLoader();
@@ -115,7 +115,7 @@ var authToken="";
                   url: "/delete/"+dayId,
                   type: "POST",
                  headers:{
-                "Authorization": "Bearer " + authToken
+                "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
                  },
            success: function (jqXHR) {
             stopAppLoader();
@@ -141,7 +141,7 @@ var authToken="";
                   url: "/addData/getFile/"+id,
                   type: "GET",
                  headers:{
-                 "Authorization": "Bearer " + authToken
+                 "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
              },
            success: function (jqXHR) {
                stopAppLoader();
@@ -209,8 +209,18 @@ var authToken="";
     }
 
 
+    function logOut(){
+    window.sessionStorage.removeItem("authTokenId");
+     window.location="";
+
+
+    }
+
+
 $( document ).ready(function() {
 if($("#authTokenId").val()!=undefined){
    authToken=$("#authTokenId").val();
+   window.sessionStorage.setItem("authTokenId", authToken);
+
    }
 });

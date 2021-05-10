@@ -7,7 +7,7 @@ $(document).ready(function() {
               url:  "/viewDayPage/data",
               type: "POST",
              headers:{
-            "Authorization": "Bearer " + authToken
+            "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
              },
               dataType: "json",
             contentType: "application/json",

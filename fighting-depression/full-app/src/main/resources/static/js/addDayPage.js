@@ -30,7 +30,7 @@ function uploadData(){
               url: '/addData/upload',
               type: 'POST',
             headers:{
-            "Authorization": "Bearer " + authToken
+            "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
              },
               data: fd,
               contentType: false,
@@ -88,7 +88,7 @@ $("#docList").val(idList);
               url: "/addData/addDayData",
               type: "POST",
             headers:{
-            "Authorization": "Bearer " + authToken
+            "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
              },
               data: $('#saveDayForm').serialize(),
 

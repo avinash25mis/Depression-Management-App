@@ -16,14 +16,13 @@
 <div class="main-container">
 
     <form th:action="@{/home}" method="POST" class="form-signin">
-        <h2 class="" th:text="Welcome"></h2>
+        <h2  th:text="Welcome" ></h2>
 
             <div class="login-container">
 
                 <div class="login-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
 
-                <input type="text" id="user_name" name="username" placeholder="User Name"
-                />
+                <input type="text" id="user_name" name="username" placeholder="User Name"/>
                 <input type="password" placeholder="Password"
                        id="password" name="password" />
 

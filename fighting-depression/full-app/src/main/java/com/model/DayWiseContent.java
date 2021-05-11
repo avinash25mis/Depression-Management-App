@@ -24,15 +24,16 @@ public class DayWiseContent implements IEntity {
     private Integer day;
     private String time;
     private String title;
+    @Column(length = 1500)
     private String message;
     private String genre1;
     private String genre2;
     private String link;
-    private Boolean download;
+    private Boolean popup;
     @Transient
     private List<Long> docList;
 
-   @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+   @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
    @JoinColumn(name = "day_id")
    private List<StoredFile> fileList;
 

@@ -18,11 +18,14 @@ public class DashboardContent implements IEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "day_wise_content_id")
     private Long id;
 
-    @Column(length = 1500)
+    @Column(length = 3000)
     private String message;
-    @Column(length = 1500)
-    private String terms;
-    @Column(length = 1500)
+    @Column(length = 3000)
     private String policy;
+    @Column(length = 3000)
+    private String terms;
+    @Column(length = 3000)
+    private String aboutUs;
+
 
 }

@@ -3,39 +3,33 @@
 
 
 <body>
-<div class="banner">
-    <h3>Dashboard Data</h3>
-</div>
-
-<br> <br>
-
-<br> <br>
 
 
+<br>
 
 
  </div>
       <form id="dashboardFormId" th:object="${content}">
         <input type="hidden" th:field="*{id}"  />
         <div class="form-group row">
-            <div class="col-xs-6">
-                <label  for="declaration">Declaration</label>
-                <textarea id="declaration" th:field="*{message}" class="form-control" placeholder="Declaration"> </textarea>
+            <div class="col-xs-8">
+                <label  for="message">Welcome Message</label>
+                <textarea id="message" th:field="*{message}" class="form-control" placeholder="Welcome Message"> </textarea>
             </div>
 
         </div>
         <br>
 
         <div class="form-group row">
-            <div class="col-xs-6">
-                <label  for="aggrement">Aggrement</label>
-                <textarea id="aggrement" th:field="*{terms}" class="form-control" placeholder="Aggrement"></textarea>
+            <div class="col-xs-8">
+                <label  for="terms">Terms & Condition</label>
+                <textarea id="terms" th:field="*{terms}" class="form-control" placeholder="Terms & Condition"></textarea>
             </div>
 
         </div>
        <br>
         <div class="form-group row">
-            <div class="col-xs-6">
+            <div class="col-xs-8">
                 <label  for="privacyPolicy">Privacy Policy</label>
                 <textarea id="privacyPolicy"   th:field="*{policy}" class="form-control" placeholder="Privacy Policy"></textarea>
             </div>
@@ -43,8 +37,16 @@
         </div>
 
         <br>
+
+          <div class="form-group row">
+              <div class="col-xs-8">
+                  <label  for="aboutUsId">About Us</label>
+                  <textarea id="aboutUsId"   th:field="*{aboutUs}" class="form-control" placeholder="About Us"></textarea>
+              </div>
+
+          </div>
         <div class="form-group row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
             <button type="button"  onclick="dashBoardSaveFunction()"  class="btn btn-primary btn-block btn-large">UPDATE</button>
         </div>
         </div>
@@ -68,7 +70,7 @@ function dashBoardSaveFunction(){
              data: formData,
 
        success: function (jqXHR) {
-         alert("Data Saved");
+         $.notify("Day Data Saved", "success");
         },
        error: function (jqXHR) {
         alert(jqXHR.responseJSON.message);

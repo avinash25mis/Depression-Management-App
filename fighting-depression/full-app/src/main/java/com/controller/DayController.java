@@ -49,19 +49,37 @@ public class DayController {
     @RequestMapping("/addDayData")
     @ResponseBody
     public Long addDay(@ModelAttribute DayWiseContent dayData)  {
-
+        List<Long> existingImageIds= new ArrayList<>();
+        List<Long> newImageIds= dayData.getDocList();
+        List<StoredFile> existingImages= new ArrayList<>();
         if(dayData.getId()!=null){
-            List<Long> existigIdList=commonRepository.getAllStoredFileIds(dayData.getId());
-            if(CollectionUtils.isNotEmpty(existigIdList)) {
-                //int deletedCount = commonRepository.deleteStoredFiles(existigIdList);
-            }
-         }
-
-        if(CollectionUtils.isNotEmpty(dayData.getDocList())) {
-            List<StoredFile> allStoredFileWithId = commonRepository.getAllStoredFileWithId(dayData.getDocList());
-            dayData.setFileList(allStoredFileWithId);
-
+             existingImageIds=commonRepository.getAllStoredFileIds(dayData.getId());
+             if(CollectionUtils.isNotEmpty(existingImageIds)){
+                 existingImages=commonRepository.getAllStoredFileWithId(existingImageIds);
+             }
         }
+
+
+        if(CollectionUtils.isEmpty(newImageIds)){
+            if(CollectionUtils.isNotEmpty(existingImageIds)) {
+                int deletedCount = commonRepository.deleteStoredFiles(existingImageIds);
+            }
+        }else{
+            if(CollectionUtils.isEmpty(existingImageIds)){
+                List<StoredFile> newStoredImages = commonRepository.getAllStoredFileWithId(newImageIds);
+                dayData.setFileList(newStoredImages);
+            }else{
+                if(newImageIds.equals(existingImageIds)){
+                    dayData.setFileList(existingImages);
+                }else {
+                    int deletedCount = commonRepository.deleteStoredFiles(existingImageIds);
+                    List<StoredFile> newStoredImages = commonRepository.getAllStoredFileWithId(newImageIds);
+                    dayData.setFileList(newStoredImages);
+                }
+            }
+        }
+
+
         dayData=commonRepository.saveOrUpdate(dayData);
         return dayData.getId();
     }

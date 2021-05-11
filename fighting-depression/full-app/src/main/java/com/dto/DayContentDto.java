@@ -10,7 +10,7 @@ public class DayContentDto {
     public DayContentDto() {
     }
 
-    public DayContentDto(Long id, Integer day, String time, String title, String message, String genre1, String genre2, String link, Boolean download, Long docId, String name) {
+    public DayContentDto(Long id, Integer day, String time, String title, String message, String genre1, String genre2, String link, Boolean popup, Long docId, String name) {
         this.id = id;
         this.day = day;
         this.time = time;
@@ -19,7 +19,7 @@ public class DayContentDto {
         this.genre1 = genre1;
         this.genre2 = genre2;
         this.link = link;
-        this.download = download;
+        this.popup = popup;
         this.docId = docId;
         this.name = name;
     }
@@ -32,7 +32,7 @@ public class DayContentDto {
     private String genre1;
     private String genre2;
     private String link;
-    private Boolean download;
+    private Boolean popup;
     private Long docId;
     private String name;
 }

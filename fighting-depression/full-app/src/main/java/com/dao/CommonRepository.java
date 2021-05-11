@@ -80,7 +80,7 @@ public class CommonRepository {
     }
 
     public List  findAllDayContent(){
-       String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.download,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f order by d.day,d.time";
+       String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.popup,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f order by d.day,d.time";
         Query query = em.createQuery(queryString);
         List resultList = query.getResultList();
         return resultList;
@@ -89,7 +89,7 @@ public class CommonRepository {
 
 
     public List  findAllDayContentById(Long id){
-        String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.download,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f where d.id=:id";
+        String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.popup,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f where d.id=:id";
         Query query = em.createQuery(queryString);
         query.setParameter("id",id);
         List resultList = query.getResultList();
@@ -178,10 +178,15 @@ public class CommonRepository {
 
    @Transactional
     public void deleteDayData(Long id) {
+       Query queryNative = em.createNativeQuery("DELETE from stored_file  where day_id =:id");
+       queryNative.setParameter("id",id);
+       int childCount = queryNative.executeUpdate();
+
         Query query = em.createQuery("DELETE from DayWiseContent  where id =:id");
         query.setParameter("id",id);
-        query.executeUpdate();
-    }
+       int parentCount = query.executeUpdate();
+       System.out.println();
+   }
 
     @Transactional
     public int deleteStoredFiles(List<Long> idList) {

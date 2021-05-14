@@ -4,7 +4,7 @@ $(document).ready(function() {
         var data;
 
         $.ajax({
-              url:  "/viewDayPage/data",
+              url:  apiUrl+"/viewDayPage/data",
               type: "POST",
              headers:{
             "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -76,7 +76,29 @@ $(document).ready(function() {
 
             {"data": "genre1"},
             {"data": "genre2"},
-            {"data": "message"},
+            {"data": "message",
+             "mRender": function( data, type, full, meta,row) {
+                debugger;
+              if(type === 'display'){
+               var display="";
+              if(data==null || data==""){
+                   display=""
+               }else{
+                 if(data.length > 20) {
+                 display = data.substring(0,20);
+                 display=display+"..."
+                 }else{
+                  display=data;
+                  }
+                }
+
+                data = "<a  href='#' class='message_link'  >" + display + "</a>";
+               /* data = '<a  href="#" onclick="return showMessage(\''+ full + '\')">' + display + '</a>';*/
+                }
+             return data;
+               }
+
+            },
             {"data": "link",
              "render": function( data, type, full, meta) {
             if(type === 'display'){
@@ -87,7 +109,16 @@ $(document).ready(function() {
           }
 
 
-         ]
+         ],
+
+         columnDefs: [
+            {
+          render: function (data, type, full, meta) {
+           return "<div class='text-wrap width-200'>" + data + "</div>";
+             },
+            targets: 3
+              }
+              ]
 
 		});
     });
@@ -103,8 +134,17 @@ fetchImage(docId);
 
 function deleteDayData(id){
 showModal(id);
-$("#alertOfModal").text("Are you Sure you want to delete the data ?");
+$("#alertOfModal").text("...Are you Sure you want to delete the data ?");
 
+}
+
+
+function showMessage(val){
+
+showModal();
+$("#modalConfirmButton").hide();
+
+$("#alertOfModal").text(val);
 }
 
 
@@ -116,4 +156,20 @@ getAddDayPage(id);
 function deleteDay(id){
 deleteDayById(id);
 }
+
+
+$(document).ready(function() {
+
+
+    $("#example").on('click','a.message_link', function() {
+          var table = $('#example').DataTable();
+           var tr = $(this).closest('tr');
+        var message= table.row(tr).data().message
+         showMessage(message);
+
+});
+
+
+
+});
 

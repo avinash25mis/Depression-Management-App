@@ -21,6 +21,8 @@
 
 
 </head>
+<input type="hidden" id="contextPathId" th:value="${contextPath}">
+
 <div th:if="${refresh}">
 <input type="hidden" id="authTokenId" th:value="${authToken}">
 </div>
@@ -41,19 +43,24 @@
 </div>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" style="top:35%;">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" style="padding-top: 10%">
     <div class="modal-dialog">
         <div class="modal-content">
 
+            <div class="modal-header">
+                <button type="button" class="close" onclick="hideModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
             <div class="modal-body" id="bodyOfModal">
 
-                <div class="modal-header">
+                    <p id="alertOfModal"></p>
+                    <div id="imageOfModal" style="padding-left: 30%"></div>
+                    <input  id="fieldOfModal" type="hidden">
 
-                </div>
+             </div>
 
-                <div id="imageOfModal"></div>
-                <input  id="fieldOfModal" type="hidden"></div>
-                <div id="alertOfModal"></div>
 
             <div class="modal-footer">
                 <button type="button"  id="modalCloseButton" class="btn btn-secondary" onclick="hideModal()">close</button>
@@ -73,7 +80,6 @@
 </html>
 
 <script>
-
 
 
 </script>

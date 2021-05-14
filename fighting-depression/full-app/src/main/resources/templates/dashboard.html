@@ -62,7 +62,7 @@ function dashBoardSaveFunction(){
 
          var formData=$("#dashboardFormId").serialize();
            $.ajax({
-              url: "/dashboard/update",
+              url: apiUrl+"/dashboard/update",
               type: "POST",
             headers:{
             "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")

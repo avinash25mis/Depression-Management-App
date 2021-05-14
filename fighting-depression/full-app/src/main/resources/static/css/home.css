@@ -38,12 +38,16 @@
 }
 
 
-.modal-body {
-    position: relative;
+.modal-content{
+    max-height:100%;
     overflow-y: auto;
-    max-height: 400px;
-    padding: 15px;
 }
+
+.modal-body {
+     height:auto;
+   }
+
+
 
 
 

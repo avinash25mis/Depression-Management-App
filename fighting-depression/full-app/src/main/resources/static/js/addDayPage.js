@@ -27,7 +27,7 @@ function uploadData(){
            fd.append('file',files[0]);
 
            $.ajax({
-              url: '/addData/upload',
+              url: apiUrl+'/addData/upload',
               type: 'POST',
             headers:{
             "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -85,7 +85,7 @@ function saveDayData(){
 function callingSave(){
 $("#docList").val(idList);
            $.ajax({
-              url: "/addData/addDayData",
+              url: apiUrl+"/addData/addDayData",
               type: "POST",
             headers:{
             "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")

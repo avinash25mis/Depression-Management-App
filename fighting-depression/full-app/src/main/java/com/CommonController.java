@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -46,6 +47,9 @@ private CommonService commonService;
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private ServletContext context;
+
     @ResponseBody
     @GetMapping(value = {"/test"})
     public String test() {
@@ -57,12 +61,14 @@ private CommonService commonService;
     public String firstPage(@RequestParam(value = "error",required = false)boolean error,@RequestParam(value = "logout",required = false)boolean logout,Map map) {
        map.put("error",error);
        map.put("logout",logout);
+        map.put("contextPath", context.getContextPath());
         return "login";
     }
 
     @RequestMapping(value = {"/homePage"})
     public String homePage(ModelMap map) {
         map.put("refresh", false);
+        map.put("contextPath", context.getContextPath());
         return "home";
     }
 
@@ -86,6 +92,7 @@ private CommonService commonService;
            String jwt = jwtService.generateTokenFromUserDetail(userDetails);
            map.put("refresh", true);
            map.put("authToken", jwt);
+           map.put("contextPath", context.getContextPath());
 
            return "home";
        }

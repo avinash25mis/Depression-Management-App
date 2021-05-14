@@ -1,11 +1,13 @@
-
+const hostName=window.location.origin;
+var appContextPath="";
+var apiUrl="";
 
 
 
    function getHomePage(){
            startAppLoader();
                 $.ajax({
-                   url: "/homePage",
+                   url: apiUrl+"/homePage",
                    type: "GET",
                    headers:{
                       "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -33,7 +35,7 @@
    function getAddDayPage(id){
            startAppLoader();
                 $.ajax({
-                   url: "/addDayPage",
+                   url: apiUrl+"/addDayPage",
                    type: "POST",
                    headers:{
                                "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -61,7 +63,7 @@
         function getViewDayPage(){
         startAppLoader();
            $.ajax({
-              url: "/viewDayPage",
+              url: apiUrl+"/viewDayPage",
               type: "POST",
                  headers:{
             "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -88,7 +90,7 @@
      function getDashBoardPage(){
        startAppLoader();
            $.ajax({
-              url: "/dashBoardPage",
+              url: apiUrl+"/dashBoardPage",
               type: "POST",
              headers:{
             "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -112,7 +114,7 @@
          function deleteDayById(dayId){
            startAppLoader();
                $.ajax({
-                  url: "/delete/"+dayId,
+                  url:apiUrl+ "/delete/"+dayId,
                   type: "POST",
                  headers:{
                 "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -138,7 +140,7 @@
 
           startAppLoader();
                $.ajax({
-                  url: "/addData/getFile/"+id,
+                  url: apiUrl+"/addData/getFile/"+id,
                   type: "GET",
                  headers:{
                  "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
@@ -218,6 +220,8 @@
 
 
 $( document ).ready(function() {
+appContextPath = $("#contextPathId").val();
+apiUrl=hostName+appContextPath
 if($("#authTokenId").val()!=undefined){
    var authToken=$("#authTokenId").val();
    window.sessionStorage.setItem("authTokenId", authToken);

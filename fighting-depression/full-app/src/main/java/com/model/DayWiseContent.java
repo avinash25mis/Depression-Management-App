@@ -24,7 +24,7 @@ public class DayWiseContent implements IEntity {
     private Integer day;
     private String time;
     private String title;
-    @Column(length = 1500)
+    @Column(length = 20000)
     private String message;
     private String genre1;
     private String genre2;

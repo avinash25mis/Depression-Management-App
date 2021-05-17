@@ -5,7 +5,7 @@
   width: 120px;
   height: 120px;
   margin: auto;
-   padding: 10px;
+  padding: 10px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
@@ -20,22 +20,39 @@
   100% { transform: rotate(360deg); }
 }
 
+body {
+  font: 400 15px Lato, sans-serif;
+  line-height: 1.8;
+  color: #818;
+}
 
-
-
-.indexBody {
-  background-image: url('/images/home.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-
-
+.jumbotron {
+  font-family: Montserrat, sans-serif;
 
 }
 
-.fixDiv {
- position: absolute;
+.navbar {
+  font-family: Montserrat, sans-serif;
 }
+
+
+
+h3 {
+  font-size: 24px;
+  color: #303030;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+
+
+.container-fluid {
+  padding: 60px 50px;
+}
+
+
+
+
 
 
 .modal-content{
@@ -50,23 +67,9 @@
 
 
 
-
-.navbar {
-  overflow: hidden;
-  background-color: #4169e1;
+label {
+    color: #555;
+    display: block;
+    padding: 10px;
+    margin: 3px;
 }
-
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 88px;
-  text-decoration: none;
-}
-
-.navbar a:hover{
-  background-color: white;
-}
-
-

@@ -78,7 +78,7 @@ $(document).ready(function() {
             {"data": "genre2"},
             {"data": "message",
              "mRender": function( data, type, full, meta,row) {
-                debugger;
+
               if(type === 'display'){
                var display="";
               if(data==null || data==""){

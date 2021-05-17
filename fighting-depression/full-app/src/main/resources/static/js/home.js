@@ -18,6 +18,7 @@ var apiUrl="";
                 $("#addDayPageId").html("");
                $("#viewDayPageId").html("");
                $("#dashboardPageId").html("");
+               $("#homePageDiv").show();
 
              },
             error: function (jqXHR) {
@@ -47,6 +48,7 @@ var apiUrl="";
                 $("#addDayPageId").html(jqXHR);
                $("#viewDayPageId").html("");
                $("#dashboardPageId").html("");
+                $("#homePageDiv").hide();
 
              },
             error: function (jqXHR) {
@@ -74,6 +76,7 @@ var apiUrl="";
           $("#addDayPageId").html("");
           $("#viewDayPageId").html(jqXHR);
           $("#dashboardPageId").html("");
+           $("#homePageDiv").hide();
 
         },
        error: function (jqXHR) {
@@ -100,6 +103,7 @@ var apiUrl="";
            $("#addDayPageId").html("");
           $("#viewDayPageId").html("");
            $("#dashboardPageId").html(jqXHR);
+            $("#homePageDiv").hide();
         },
        error: function (jqXHR) {
         alert(jqXHR.responseJSON.message);

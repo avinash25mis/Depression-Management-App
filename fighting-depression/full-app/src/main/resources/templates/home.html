@@ -1,77 +1,156 @@
 <html>
 <html  xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/css/datatables.css}"/>
     <link th:rel="stylesheet" th:href="@{/css/home.css}"/>
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script th:src="@{/js/datatables.js}"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script th:src="@{/js/foggy.js}"></script>
     <script  th:src="@{/js/notify.js}" ></script>
     <script  th:src="@{/js/notify.min.js}" ></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
     <script  th:src="@{/js/home.js}" ></script>
 
-
-
-
-
-
 </head>
-<input type="hidden" id="contextPathId" th:value="${contextPath}">
 
-<div th:if="${refresh}">
-<input type="hidden" id="authTokenId" th:value="${authToken}">
-</div>
-<body class="indexBody">
 
-<div class="navbar">
-    <a href="#"  onclick="return getHomePage();">Home</a>
-    <a href="#"  onclick="return getDashBoardPage();">Dashboard</a>
-    <a href="#"  onclick="return getAddDayPage();">Add Day</a>
-    <a href="#"  onclick="return getViewDayPage();">View Days</a>
-    <a href="#"  onclick="return logOut();">Logout</a>
-</div>
+<style>
+.jumbotron {
+ color: #fff;
+  padding: 100px 25px;
+}
+
+.homePageClass {
+  background-color: #f4511e;
+}
+
+.container-fluid {
+  padding: 60px 50px;
+}
+
+.navbar {
+  margin-bottom: 0;
+  background-color: #192d6a;
+  z-index: 9999;
+  border: 0;
+  font-size: 12px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 4px;
+  border-radius: 0;
+}
+
+.navbar li a, .navbar .navbar-brand {
+  color: #fff !important;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+  color: #000000 !important;
+  background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: transparent;
+  color: #fff !important;
+}
+
+</style>
+
+<body class="homeBody">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" onclick="return getHomePage();">You And Me</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" onclick="return getDashBoardPage();" >Dashboard</a></li>
+                <li><a href="#" onclick="return getAddDayPage();" >Add Day</a></li>
+                <li><a href="#" onclick="return getViewDayPage();">View Days</a></li>
+                <li><a href="#" onclick="return logOut();" >Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br>
+
+
+
+<div class="jumbotron">
+
 <div id="loaderDiv" class="loader" style="display: none;"></div>
-<div class="parentAppDiv">
-<div id="dashboardPageId"></div>
-<div id="viewDayPageId"></div>
-<div id="addDayPageId"></div>
-</div>
-
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" style="padding-top: 10%">
-    <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-            <div class="modal-header">
-                <button type="button" class="close" onclick="hideModal()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="hideModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-            <div class="modal-body" id="bodyOfModal">
+                <div class="modal-body" id="bodyOfModal">
 
                     <p id="alertOfModal"></p>
                     <div id="imageOfModal" style="padding-left: 30%"></div>
                     <input  id="fieldOfModal" type="hidden">
 
-             </div>
+                </div>
 
 
-            <div class="modal-footer">
-                <button type="button"  id="modalCloseButton" class="btn btn-secondary" onclick="hideModal()">close</button>
-                <button type="button" id="modalConfirmButton" class="btn btn-primary" onclick="confirmDecision()">Confirm</button>
+                <div class="modal-footer">
+                    <button type="button"  id="modalCloseButton" class="btn btn-secondary" onclick="hideModal()">close</button>
+                    <button type="button" id="modalConfirmButton" class="btn btn-primary" onclick="confirmDecision()">Confirm</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+ <div id="homePageDiv" class="homePageClass">
+
+    <div class="container-fluid">
+        <h3>About Us</h3>
+        <p th:text="${content.aboutUs}" style="font-family: Montserrat"></p>
+    </div>
+
+    <div class="container-fluid">
+            <h3>Welcome Message</h3>
+            <p th:text="${content.message}" style="font-family: Montserrat"></p>
+    </div>
+
+    <div class="container-fluid">
+            <h3>Terms & Condition</h3>
+            <p th:text="${content.terms}" style="font-family: Montserrat"></p>
+    </div>
+
+    <div class="container-fluid">
+            <h3>Privacy Policy</h3>
+            <p th:text="${content.policy}" style="font-family: Montserrat"></p>
+    </div>
+
 </div>
 
+<input type="hidden" id="contextPathId" th:value="${contextPath}">
 
+<div th:if="${refresh}">
+<input type="hidden" id="authTokenId" th:value="${authToken}">
+</div>
+
+<div id="dashboardPageId"></div>
+<div id="viewDayPageId" text="#ffffff" link="#ff0000" vlink="#ff0000" alink="#ff0000"></div>
+<div id="addDayPageId"></div>
+
+
+</div>
 
 </body>
 
@@ -79,8 +158,5 @@
 
 </html>
 
-<script>
 
-
-</script>
 

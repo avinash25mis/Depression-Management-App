@@ -182,6 +182,7 @@ public class CommonRepository {
        queryNative.setParameter("id",id);
        int childCount = queryNative.executeUpdate();
 
+
         Query query = em.createQuery("DELETE from DayWiseContent  where id =:id");
         query.setParameter("id",id);
        int parentCount = query.executeUpdate();

@@ -69,6 +69,7 @@ private CommonService commonService;
     public String homePage(ModelMap map) {
         map.put("refresh", false);
         map.put("contextPath", context.getContextPath());
+        getLatestDashboardData(map);
         return "home";
     }
 
@@ -93,7 +94,7 @@ private CommonService commonService;
            map.put("refresh", true);
            map.put("authToken", jwt);
            map.put("contextPath", context.getContextPath());
-
+           getLatestDashboardData(map);
            return "home";
        }
     }

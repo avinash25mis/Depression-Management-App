@@ -22,13 +22,11 @@
 
 <style>
 .jumbotron {
- color: #fff;
+  color: #fff;
   padding: 100px 25px;
 }
 
-.homePageClass {
-  background-color: #f4511e;
-}
+
 
 .container-fluid {
   padding: 60px 50px;
@@ -83,56 +81,51 @@
 </nav>
 <br><br>
 
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="padding-top:10%">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="hideModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="bodyOfModal">
+                <p id="alertOfModal"></p>
+                <div id="imageOfModal" style="padding-left: 30%"></div>
+                <input  id="fieldOfModal" type="hidden">
+            </div>
+            <div class="modal-footer">
+                <button type="button"  id="modalCloseButton" class="btn btn-secondary" onclick="hideModal()">close</button>
+                <button type="button" id="modalConfirmButton" class="btn btn-primary" onclick="confirmDecision()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="jumbotron">
 
 <div id="loaderDiv" class="loader" style="display: none;"></div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" style="padding-top: 10%">
-        <div class="modal-dialog">
-            <div class="modal-content">
 
-                <div class="modal-header">
-                    <button type="button" class="close" onclick="hideModal()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body" id="bodyOfModal">
-
-                    <p id="alertOfModal"></p>
-                    <div id="imageOfModal" style="padding-left: 30%"></div>
-                    <input  id="fieldOfModal" type="hidden">
-
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button"  id="modalCloseButton" class="btn btn-secondary" onclick="hideModal()">close</button>
-                    <button type="button" id="modalConfirmButton" class="btn btn-primary" onclick="confirmDecision()">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
  <div id="homePageDiv" class="homePageClass">
 
-    <div class="container-fluid">
+    <div class="container-fluid appGreen">
         <h3>About Us</h3>
         <p th:text="${content.aboutUs}" style="font-family: Montserrat"></p>
     </div>
-
-    <div class="container-fluid">
+     <br>
+    <div class="container-fluid appPurpel">
             <h3>Welcome Message</h3>
             <p th:text="${content.message}" style="font-family: Montserrat"></p>
     </div>
-
-    <div class="container-fluid">
+     <br>
+    <div class="container-fluid appBluishGreen">
             <h3>Terms & Condition</h3>
             <p th:text="${content.terms}" style="font-family: Montserrat"></p>
     </div>
-
-    <div class="container-fluid">
+   <br>
+    <div class="container-fluid appLightBrown">
             <h3>Privacy Policy</h3>
             <p th:text="${content.policy}" style="font-family: Montserrat"></p>
     </div>
@@ -146,8 +139,8 @@
 </div>
 
 <div id="dashboardPageId"></div>
-<div id="viewDayPageId" text="#ffffff" link="#ff0000" vlink="#ff0000" alink="#ff0000"></div>
-<div id="addDayPageId"></div>
+<div id="viewDayPageId"></div>
+<div id="addDayPageId" ></div>
 
 
 </div>
@@ -160,3 +153,9 @@
 
 
 
+<script>
+
+
+
+
+</script>

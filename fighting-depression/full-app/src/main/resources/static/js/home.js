@@ -169,8 +169,8 @@ var apiUrl="";
     function showModal(id){
     $("#modalConfirmButton").show();
     $( "#viewDayPageId" ).foggy(true);
-    $( "#exampleModal" ).addClass( "show" );
-     $("#exampleModal").css("display","block");
+    $( "#exampleModalCenter" ).addClass( "in" );
+     $("#exampleModalCenter").css("display","block");
      if(id!=undefined || id!=null){
      $("#fieldOfModal").val(id);
      }
@@ -178,8 +178,8 @@ var apiUrl="";
 
    function hideModal(){
     $( "#viewDayPageId" ).foggy(false);
-    $( "#exampleModal" ).removeClass("show" );
-    $("#exampleModal").css("display","none");
+    $( "#exampleModalCenter" ).removeClass("in" );
+    $("#exampleModalCenter").css("display","none");
     $("#imageOfModal").html("");
      $("#fieldOfModal").html("");
      $("#alertOfModal").html("");
@@ -191,8 +191,8 @@ var apiUrl="";
       deleteDay(id);
      }
     $( "#viewDayPageId" ).foggy(false);
-    $( "#exampleModal" ).removeClass("show");
-    $("#exampleModal").css("display","none");
+    $( "#exampleModalCenter" ).removeClass("in");
+    $("#exampleModalCenter").css("display","none");
     $("#imageOfModal").html("");
      $("#fieldOfModal").html("");
      $("#alertOfModal").html("");

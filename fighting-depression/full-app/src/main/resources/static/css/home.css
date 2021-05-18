@@ -73,3 +73,19 @@ label {
     padding: 10px;
     margin: 3px;
 }
+
+.appGreen {
+  background-color: #578828;
+}
+
+.appBluishGreen {
+  background-color: #465880;
+}
+
+.appPurpel{
+  background-color: #713c9a;
+}
+
+.appLightBrown{
+  background-color: #B08B3B
+}

@@ -99,13 +99,14 @@
 
 
         <div class="col-xs-2">
+            <label for="file" class="custom-file-upload">Upload Image</label>
             <input type="file" id="file" accept="image/*" onchange="readURL(this);" />
 
 
         </div>
         <div class="col-xs-2">
-
-            <input type="button" id="clearIt" value="X" class="btn"/>
+            <label for="clearIt" >X</label>
+            <input type="button" id="clearIt" class="btn"/>
 
         </div>
 
@@ -134,7 +135,10 @@
 
 <style>
 
-
+input[type=file] {
+    display: block;
+    color: #131315;
+}
 
 
 .my-error-class {

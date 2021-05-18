@@ -59,7 +59,7 @@
 
 </style>
 
-<body class="homeBody">
+<body class="homeBody" >
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -67,10 +67,21 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" onclick="return getHomePage();">You And Me</a>
+
         </div>
+
+
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
+            <div id="homePageNav">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="#aboutUs">About Us</a></li>
+                <li><a href="#ourMessage">Message</a></li>
+                <li><a href="#ourTerms">Terms</a></li>
+                <li><a href="#ourPolicy">Policy</a></li>
+            </ul>
+            </div>
+             <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" onclick="return getHomePage();" >Home</a></li>
                 <li><a href="#" onclick="return getDashBoardPage();" >Dashboard</a></li>
                 <li><a href="#" onclick="return getAddDayPage();" >Add Day</a></li>
                 <li><a href="#" onclick="return getViewDayPage();">View Days</a></li>
@@ -110,22 +121,22 @@
 
  <div id="homePageDiv" class="homePageClass">
 
-    <div class="container-fluid appGreen">
+    <div id="aboutUs" class="container-fluid appGreen">
         <h3>About Us</h3>
         <p th:text="${content.aboutUs}" style="font-family: Montserrat"></p>
     </div>
      <br>
-    <div class="container-fluid appPurpel">
+    <div id="ourMessage" class="container-fluid appPurpel">
             <h3>Welcome Message</h3>
             <p th:text="${content.message}" style="font-family: Montserrat"></p>
     </div>
      <br>
-    <div class="container-fluid appBluishGreen">
+    <div id="ourTerms" class="container-fluid appBluishGreen">
             <h3>Terms & Condition</h3>
             <p th:text="${content.terms}" style="font-family: Montserrat"></p>
     </div>
    <br>
-    <div class="container-fluid appLightBrown">
+    <div id="ourPolicy" class="container-fluid appLightBrown">
             <h3>Privacy Policy</h3>
             <p th:text="${content.policy}" style="font-family: Montserrat"></p>
     </div>

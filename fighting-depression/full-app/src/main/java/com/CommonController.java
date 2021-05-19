@@ -3,6 +3,7 @@ package com;
 
 
 import com.ExceptionHandling.AppExceptions;
+import com.configuration.mail.AppEmailSender;
 import com.configuration.security.AppUserDetailService;
 import com.configuration.security.JwtService;
 import com.configuration.security.dto.AuthRequest;
@@ -50,6 +51,9 @@ private CommonService commonService;
     @Autowired
     private ServletContext context;
 
+    @Autowired
+    private AppEmailSender appEmailSender;
+
     @ResponseBody
     @GetMapping(value = {"/test"})
     public String test() {
@@ -61,8 +65,8 @@ private CommonService commonService;
     public String firstPage(@RequestParam(value = "error",required = false)boolean error,@RequestParam(value = "logout",required = false)boolean logout,Map map) {
        map.put("error",error);
        map.put("logout",logout);
-        map.put("contextPath", context.getContextPath());
-        return "login";
+       map.put("contextPath", context.getContextPath());
+       return "login";
     }
 
     @RequestMapping(value = {"/homePage"})

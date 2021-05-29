@@ -100,7 +100,7 @@ public class CommonRepository {
 
 
     public List  findDaysDataInRange(Integer startDay,Integer endDay){
-        String queryString="From DayWiseContent where day >=:startDay AND day <=:endDay";
+        String queryString="From DayWiseContent where day >=:startDay AND day <=:endDay order by day";
         Query query = em.createQuery(queryString);
         query.setParameter("startDay",startDay);
         query.setParameter("endDay",endDay);

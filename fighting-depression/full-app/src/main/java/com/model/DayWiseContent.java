@@ -30,6 +30,7 @@ public class DayWiseContent implements IEntity {
     private String genre2;
     private String link;
     private Boolean popup;
+    private Boolean askMail;
     @Transient
     private List<Long> docList;
 

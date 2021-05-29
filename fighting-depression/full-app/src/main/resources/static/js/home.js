@@ -156,7 +156,7 @@ var apiUrl="";
            success: function (jqXHR) {
                stopAppLoader();
 
-               $("#attachedImage").attr("src","data:image/JPEG;base64,"+jqXHR).width(150).height(150);
+               $("#attachedImage").attr("src","data:image/JPEG;base64,"+jqXHR).width(200).height(200);
 
 
             },
@@ -237,6 +237,29 @@ if($("#authTokenId").val()!=undefined){
    }
 
 
+$.fn.wrapInTag = function(opts) {
+
+  var tag = 'em',
+      words = opts.words || [],
+      regex = words,
+      replacement = '<'+ tag +'>';
+
+  return this.html(function() {
+    return $(this).html().replace(regex, replacement);
+  });
+};
+
+$('p').wrapInTag({
+  tag: 'em',
+  words: ['**']
+});
+
+$('p').wrapInTag({
+  tag: 'strong',
+  words: ['*']
+});
+
+
      $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
 
       // Make sure this.hash has a value before overriding default behavior
@@ -263,5 +286,27 @@ if($("#authTokenId").val()!=undefined){
 
 });
 
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+             var reader = new FileReader();
+              reader.onload = function (e) {
+                 $('#attachedImage').attr('src', e.target.result);
+                };
+              reader.readAsDataURL(input.files[0]);
+         }
+
+ }
+
+
+ function clearImage(){
+
+      $("#file").val("");
+
+     $('#attachedImage').attr('src', "#");
+     $("#fileIdDashBoard").val("");
+     idList="";
+
+  }
 
 

@@ -1,5 +1,6 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.model.common.IEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,15 @@ public class DashboardContent implements IEntity {
     private String terms;
     @Column(length = 20000)
     private String aboutUs;
+    @Transient
+    private Long fileIdDashBoard;
+
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private StoredFile file;
+
+
+
 
 
 }

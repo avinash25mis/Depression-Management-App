@@ -70,7 +70,8 @@ private CommonService commonService;
     }
 
     @RequestMapping(value = {"/homePage"})
-    public String homePage(ModelMap map) {
+    @Transactional(readOnly = true)
+    public String homePage(ModelMap map) throws SQLException {
         map.put("refresh", false);
         map.put("contextPath", context.getContextPath());
         getLatestDashboardData(map);
@@ -78,7 +79,8 @@ private CommonService commonService;
     }
 
     @RequestMapping(value = {"/home"})
-    public String login(@ModelAttribute AuthRequest request,ModelMap map) {
+    @Transactional(readOnly = true)
+    public String login(@ModelAttribute AuthRequest request,ModelMap map) throws SQLException {
        if(request==null ||request.getUsername()==null|| request.getUsername()==null){
            return  "redirect:/login?logout=true";
        }else {
@@ -104,17 +106,15 @@ private CommonService commonService;
     }
 
 
-    @PostMapping(value = {"/login"})
-    public String login(@ModelAttribute LoginDto loginDto, ModelMap map) {
 
-        return getLatestDashboardData(map);
-    }
 
 
     @PostMapping(value = {"/dashBoardPage"})
-    public String login(ModelMap map) {
+    @Transactional(readOnly = true)
+    public String login(ModelMap map) throws SQLException {
 
-        return getLatestDashboardData(map);
+      getLatestDashboardData(map);
+        return "dashboard";
     }
 
 
@@ -151,9 +151,10 @@ private CommonService commonService;
 
     @GetMapping(value = {"/dashBoard/json"})
     @ResponseBody
-    public List dashboardJson(ModelMap map) {
-        List lastRecords = commonRepository.getLastRecords(DashboardContent.class.getName(), 1);
-        return lastRecords;
+    @Transactional(readOnly = true)
+    public List dashboardJson(ModelMap map) throws SQLException {
+        return getLatestDashboardData(map);
+
     }
 
 
@@ -166,7 +167,9 @@ private CommonService commonService;
             if(CollectionUtils.isNotEmpty(dayWiseContent.getFileList())){
                 for(StoredFile file:dayWiseContent.getFileList()){
                     if(file.getContent()!=null){
-                        file.setBase64(file.getContent().getBytes(1, (int) file.getContent().length()));
+                        byte[] base64 = file.getContent().getBytes(1, (int) file.getContent().length());
+                        String str=new String(base64);
+                        file.setBase64(str);
                     }
                 }
             }
@@ -204,14 +207,28 @@ private CommonService commonService;
 
 
 
-    private String getLatestDashboardData(ModelMap map) {
+
+    private List getLatestDashboardData(ModelMap map) throws SQLException {
         List lastRecords = commonRepository.getLastRecords(DashboardContent.class.getName(), 1);
+        DashboardContent dashboard=null;
         if(CollectionUtils.isNotEmpty(lastRecords)) {
-            map.put("content", lastRecords.get(0));
+          dashboard = (DashboardContent) lastRecords.get(0);
+            if(dashboard.getFile()!=null){
+                byte[] base64 = null;
+                dashboard.setFileIdDashBoard(dashboard.getFile().getId());
+                StoredFile storedFile=dashboard.getFile();
+                if(storedFile!=null){
+                    base64=storedFile.getContent().getBytes(1, (int) storedFile.getContent().length());
+                    String str=new String(base64);
+                    storedFile.setBase64(str);
+
+                }
+            }
+            map.put("content", dashboard);
         }else{
             map.put("content", new DashboardContent());
         }
-        return  "dashboard";
+        return lastRecords;
     }
 
 

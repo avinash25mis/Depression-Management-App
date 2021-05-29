@@ -1,42 +1,193 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
-    <title>You And Me</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap" rel="stylesheet">
-    <link th:rel="stylesheet" th:href="@{/css/login.css}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>me And you</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script  th:src="@{/js/login.js}" ></script>
 </head>
+
+<style>
+.jumbotron {
+  background-color: #ffc6b0;
+  color: #ffffff;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+}
+
+
+
+label {
+    color: #555;
+
+}
+
+p {
+    color: #555;
+
+}
+
+</style>
 
 <body>
 
-<div class="main-container">
-
-    <form th:action="@{/home}" method="POST" class="form-signin">
 
 
-            <div class="login-container">
+<div class="jumbotron text-center" style="padding-top:15%">
 
-                <div class="login-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+    <div id="indexlogin" class="container-fluid">
+    <form class="form-inline" th:action="@{/home}" method="POST" autocomplete="off">
+        <div class="input-group">
 
-                <input type="text" id="user_name" name="username" placeholder="User Name"/>
-                <input type="password" placeholder="Password"
-                       id="password" name="password" />
+            <div th:if="${error}">
+                <p class="error-msg">Login with valid username & password</p>
+            </div>
+            <div th:if="${logout}">
+                <p class="error-msg">you have been logged out</p>
+            </div>
 
-                <div th:if="${error}">
-                    <p class="error-msg">Login with valid username & password</p>
+            <div class="form-group row">
+                <div class="col-xs-4">
+                    <label  for="username">username</label>
+                    <input type="text" id="username" name="username" class="form-control" autocomplete=”off” />
+
                 </div>
-                <div th:if="${logout}">
-                    <p class="error-msg">you have been logged out</p>
+                <div class="col-xs-4">
+                    <label  for="password">password</label>
+                    <input type="password" id="password" name="password" class="form-control" autocomplete=”off” />
+
                 </div>
-                <button name="Submit" value="LOGIN" type="Submit"
-                        th:text="Login"></button>
+
+
+                <div class="col-xs-2">
+                    <label  for="login">Login</label>
+                    <button  id="login" class="btn btn-primary btn-block">Login</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+        <br>
+    </div>
+
+
+    <div id="indexforgotPassword" class="container-fluid">
+        <form class="form-inline" id="form_indexforgotPassword" autocomplete="off">
+            <div class="input-group">
+
+                <p class="error-msg" id="error_indexforgotPassword"></p>
+
+
+                <div class="form-group row">
+                    <div class="col-xs-4">
+                        <label  for="f_username">username</label>
+                        <input type="text" id="f_username" name="username" class="form-control" autocomplete=”off” />
+
+                    </div>
+
+                    <div class="col-xs-4">
+
+
+                    </div>
+
+
+
+                    <div class="col-xs-4">
+                        <label  for="sendKeyWord">key word</label>
+                        <button  id="sendKeyWord" class="btn btn-primary btn-block">Get It</button>
+                    </div>
+                </div>
 
             </div>
-    </form>
+        </form>
+        <br>
+    </div>
+
+
+
+    <div id="indexUpdatePassword" class="container-fluid">
+        <form class="form-inline" id="form_indexUpdatePassword" autocomplete="off">
+            <div class="input-group">
+
+                <p class="error-msg" id="error_indexUpdatePassword"></p>
+
+                <div class="form-group row">
+                    <div class="col-xs-2">
+                        <label  for="U_username">username</label>
+                        <input type="text" id="U_username" name="username" class="form-control" autocomplete=”off” />
+
+                    </div>
+                    <div class="col-xs-2">
+                        <label  for="keyWord">key word</label>
+                        <input type="password" id="keyWord" name="keyWord" class="form-control" autocomplete=”off” />
+
+                    </div>
+
+                    <div class="col-xs-2">
+                        <label  for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" class="form-control" autocomplete=”off” />
+
+                    </div>
+                    <div class="col-xs-2">
+                        <label  for="newPasswordAgain">Confirm Password</label>
+                        <input type="password" id="newPasswordAgain" name="newPasswordAgain" class="form-control" autocomplete=”off” />
+
+                    </div>
+
+
+                    <div class="col-xs-2">
+                        <label  for="updatePassword">Update Password</label>
+                        <button  id="updatePassword" class="btn btn-primary btn-block" >Update Password</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+     <ul>
+    <li><a href="#" onclick="showLoginOnly()" >Login</a></li>
+    <li><a href="#" onclick="showForgotOnly()" >forgot Password</a></li>
+    <li><a href="#" onclick="showUpdateOnly()" >Update Password</a></li>
+     </ul>
 </div>
+
 </body>
 </html>
+
+<script>
+   $("#indexforgotPassword").hide();
+   $("#indexUpdatePassword").hide();
+
+   function showLoginOnly(){
+
+    $("#indexlogin").show();
+    $("#indexforgotPassword").hide();
+   $("#indexUpdatePassword").hide();
+   }
+
+     function showForgotOnly(){
+       $("#indexlogin").hide();
+    $("#indexforgotPassword").show();
+   $("#indexUpdatePassword").hide();
+   }
+
+
+     function showUpdateOnly(){
+      $("#indexlogin").hide();
+    $("#indexforgotPassword").hide();
+   $("#indexUpdatePassword").show();
+   }
+
+</script>

@@ -1,16 +1,7 @@
 var idList=[];
  var div=$("#addDayPageId");
 
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-             var reader = new FileReader();
-              reader.onload = function (e) {
-                 $('#attachedImage').attr('src', e.target.result);
-                };
-              reader.readAsDataURL(input.files[0]);
-         }
 
- }
 
 
    
@@ -145,13 +136,6 @@ if(currentDocId!=undefined && currentDocId!=""){
 
 
 
-$("#clearIt").click(function(){
 
-    $("#file").val("");
-   $('#attachedImage').attr('src', "#");
-
-   idList="";
-
-});
 
 });

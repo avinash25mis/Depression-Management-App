@@ -19,20 +19,20 @@
     <div class="form-group row">
           <div class="col-xs-4">
               <label  for="day">Day</label>
-            <input type="number" id="day" th:field="*{day}" min="0" max="90" class="form-control" required/>
+            <input type="text" id="day" th:field="*{day}" min="0" max="90" class="form-control"pattern="[0-9]+" required/>
           </div>
 
-
+        <input type="hidden" id="time" th:field="*{time}"  />
         <div class="col-xs-2">
-            <label >Hours :</label>
-            <input type="number" id="hours" min="0" max="23" class="form-control" required>
+            <label >Hours</label>
+            <input type="text" id="hours" min="0" max="23" class="form-control" pattern="[0-9]+" required>
         </div>
 
         <div class="col-xs-2">
             <label >Minutes</label>
-            <input type="number" id="minutes" min="0" max="59" class="form-control" required>
-            <input type="hidden" id="time" th:field="*{time}"  />
+            <input type="text" id="minutes" min="0" max="59" class="form-control" pattern="[0-9]+" required>
         </div>
+
 
     </div>
 
@@ -77,6 +77,9 @@
             <br>
                  <input type="checkbox" id="popupId" name="popup" th:field="*{popup}"/>
                  <label  for="popupId">Show Pop up</label>
+            <br>
+                 <input type="checkbox" id="askMail" name="popup" th:field="*{askMail}"/>
+                 <label  for="askMail">Ask Email</label>
         </div>
 
         <div class="col-xs-2">
@@ -106,7 +109,7 @@
         </div>
         <div class="col-xs-2">
             <label for="clearIt" >X</label>
-            <input type="button" id="clearIt" class="btn"/>
+            <input type="button" id="clearIt" onclick="clearImage()" class="btn"/>
 
         </div>
 

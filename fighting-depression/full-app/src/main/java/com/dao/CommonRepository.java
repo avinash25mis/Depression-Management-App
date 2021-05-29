@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.*;
@@ -80,7 +81,7 @@ public class CommonRepository {
     }
 
     public List  findAllDayContent(){
-       String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.popup,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f order by d.day,d.time";
+       String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.popup,f.id as docId, f.name as name , d.askMail )  FROM DayWiseContent d left join d.fileList f order by d.day,d.time";
         Query query = em.createQuery(queryString);
         List resultList = query.getResultList();
         return resultList;
@@ -89,7 +90,7 @@ public class CommonRepository {
 
 
     public List  findAllDayContentById(Long id){
-        String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.popup,f.id as docId, f.name as name)  FROM DayWiseContent d left join d.fileList f where d.id=:id";
+        String queryString="SELECT new com.dto.DayContentDto(d.id,d.day, d.time,d.title,d.message, d.genre1,d.genre2,d.link,d.popup,f.id as docId, f.name as name , d.askMail)  FROM DayWiseContent d left join d.fileList f where d.id=:id";
         Query query = em.createQuery(queryString);
         query.setParameter("id",id);
         List resultList = query.getResultList();
@@ -120,6 +121,7 @@ public class CommonRepository {
         }
      return user;
     }
+
 
     public List getLastRecords(String className, int n) {
         String from = "FROM ";
@@ -195,5 +197,17 @@ public class CommonRepository {
         query.setParameter("idList",idList);
         int count = query.executeUpdate();
         return count;
+    }
+
+    public StoredFile findExistingImageByDashboardId(Long id) {
+        StoredFile storedFile=null;
+        Query query = em.createQuery("SELECT d.file from DashboardContent d  where d.id =:id");
+        query.setParameter("id",id);
+        try {
+            storedFile = (StoredFile) query.getSingleResult();
+        }catch (NoResultException ne){
+            storedFile=null;
+        }
+        return storedFile;
     }
 }

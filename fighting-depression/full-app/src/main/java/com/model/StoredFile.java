@@ -25,7 +25,7 @@ public class StoredFile implements IEntity {
     @JsonIgnore
     Blob content;
     @Transient
-    byte[] base64;
+    String base64;
 
 
 

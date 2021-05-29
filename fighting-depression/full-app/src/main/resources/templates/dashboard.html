@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <script  th:src="@{/js/dashboard.js}" ></script>
+
+</head>
+
+<style>
+
+input[type=file] {
+    display: block;
+    color: #131315;
+}
+
+</style>
 
 <body>
 
-
-<br>
 
 
  </div>
       <form id="dashboardFormId" th:object="${content}">
         <input type="hidden" th:field="*{id}"  />
-        <div class="form-group row">
+        <input type="hidden" id="fileIdDashBoard" th:field="*{fileIdDashBoard}"  />
+
+          <div class="form-group row">
+              <div class="col-xs-8">
+                  <label  for="aboutUsId">About Us</label>
+                  <textarea id="aboutUsId"   th:field="*{aboutUs}" class="form-control" placeholder="About Us" style="height:40%"></textarea>
+              </div>
+
+          </div>
+
+          <div class="form-group row">
             <div class="col-xs-8">
                 <label  for="message">Welcome Message</label>
-                <textarea id="message" th:field="*{message}" class="form-control" placeholder="Welcome Message"> </textarea>
+                <textarea id="message" th:field="*{message}" class="form-control" placeholder="Welcome Message" style="height:40%"> </textarea>
             </div>
 
         </div>
@@ -23,7 +44,7 @@
         <div class="form-group row">
             <div class="col-xs-8">
                 <label  for="terms">Terms & Condition</label>
-                <textarea id="terms" th:field="*{terms}" class="form-control" placeholder="Terms & Condition"></textarea>
+                <textarea id="terms" th:field="*{terms}" class="form-control" placeholder="Terms & Condition" style="height:40%"></textarea>
             </div>
 
         </div>
@@ -31,23 +52,33 @@
         <div class="form-group row">
             <div class="col-xs-8">
                 <label  for="privacyPolicy">Privacy Policy</label>
-                <textarea id="privacyPolicy"   th:field="*{policy}" class="form-control" placeholder="Privacy Policy"></textarea>
+                <textarea id="privacyPolicy"   th:field="*{policy}" class="form-control" placeholder="Privacy Policy" style="height:40%"></textarea>
             </div>
 
         </div>
 
         <br>
 
-          <div class="form-group row">
-              <div class="col-xs-8">
-                  <label  for="aboutUsId">About Us</label>
-                  <textarea id="aboutUsId"   th:field="*{aboutUs}" class="form-control" placeholder="About Us"></textarea>
-              </div>
 
-          </div>
+        <div class="form-group row">
+           <div class="col-xs-4">
+            <button type="button"  onclick="uploadData()"  class="btn btn-primary btn-block btn-large">UPDATE</button>
+           </div>
+
+            <div class="col-xs-4">
+                <label for="file"> choose File</label>
+                <input type="file" id="file" accept="image/*" onchange="readURL(this);" />
+            </div>
+
+            <div class="col-xs-4">
+                <label for="clearIt" >X</label>
+                <input type="button" id="clearIt" onclick="clearImage()" class="btn"/>
+            </div>
+        </div>
+
         <div class="form-group row">
         <div class="col-xs-4">
-            <button type="button"  onclick="dashBoardSaveFunction()"  class="btn btn-primary btn-block btn-large">UPDATE</button>
+            <img id="attachedImage"  src="#" />
         </div>
         </div>
      </form>
@@ -57,28 +88,6 @@
 
 
 <script>
-function dashBoardSaveFunction(){
 
-
-         var formData=$("#dashboardFormId").serialize();
-           $.ajax({
-              url: apiUrl+"/dashboard/update",
-              type: "POST",
-            headers:{
-            "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
-             },
-             data: formData,
-
-       success: function (jqXHR) {
-         $.notify("Day Data Saved", "success");
-        },
-       error: function (jqXHR) {
-        alert(jqXHR.responseJSON.message);
-
-        },
-
-    });
-
-}
 
 </script>

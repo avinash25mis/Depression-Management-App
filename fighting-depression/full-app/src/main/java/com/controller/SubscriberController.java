@@ -49,14 +49,21 @@ public class SubscriberController {
     @PutMapping("/emailOrFeedback")
     public String updateProfile(@RequestBody Subscribers subscribers){
         Subscribers subscribers1 = repository.findById(Subscribers.class,subscribers.getId());
+        boolean emailUpdated=false;
+        boolean feedBackUpdated=false;
         if(subscribers1!=null){
             if(!StringUtils.isEmpty(subscribers.getEmail())) {
+                emailUpdated=true;
                 subscribers1.setEmail(subscribers.getEmail());
             }
             if(!StringUtils.isEmpty(subscribers.getFeedback())) {
+                feedBackUpdated=true;
                 subscribers1.setFeedback(subscribers.getFeedback());
             }
-            repository.saveOrUpdate(subscribers1);
+            if(emailUpdated || feedBackUpdated) {
+                subscribers1.setUpdateDate(LocalDateTime.now());
+                repository.saveOrUpdate(subscribers1);
+            }
         }else{
             throw new AppExceptions("Subscriber not found");
         }

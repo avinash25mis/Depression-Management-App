@@ -24,8 +24,10 @@ public class Subscribers implements IEntity {
     private String gender;
     private Integer age;
     private String email;
+    @Column(length = 5000)
     private String feedback;
     private LocalDateTime creationDate;
+    private LocalDateTime updateDate;
 
 
 }

@@ -18,6 +18,7 @@ var apiUrl="";
                 $("#addDayPageId").html("");
                $("#viewDayPageId").html("");
                $("#dashboardPageId").html("");
+               $("#subscriberPageId").html("");
                $("#homePageDiv").show();
                $("#homePageNav").show();
 
@@ -49,6 +50,7 @@ var apiUrl="";
                 $("#addDayPageId").html(jqXHR);
                $("#viewDayPageId").html("");
                $("#dashboardPageId").html("");
+               $("#subscriberPageId").html("");
                 $("#homePageDiv").hide();
                 $("#homePageNav").hide();
 
@@ -76,6 +78,7 @@ var apiUrl="";
        success: function (jqXHR) {
          stopAppLoader();
           $("#addDayPageId").html("");
+          $("#subscriberPageId").html("");
           $("#viewDayPageId").html(jqXHR);
           $("#dashboardPageId").html("");
            $("#homePageDiv").hide();
@@ -105,6 +108,7 @@ var apiUrl="";
           stopAppLoader();
            $("#addDayPageId").html("");
           $("#viewDayPageId").html("");
+          $("#subscriberPageId").html("");
            $("#dashboardPageId").html(jqXHR);
             $("#homePageDiv").hide();
             $("#homePageNav").hide();
@@ -117,6 +121,38 @@ var apiUrl="";
      });
 
     }
+
+
+
+
+    function getAllSubscribers(){
+           startAppLoader();
+               $.ajax({
+                  url: apiUrl+"/Subscriber/page",
+                  type: "GET",
+                 headers:{
+                "Authorization": "Bearer " + window.sessionStorage.getItem("authTokenId")
+                 },
+           success: function (jqXHR) {
+              stopAppLoader();
+               $("#subscriberPageId").html(jqXHR);
+               $("#addDayPageId").html("");
+              $("#viewDayPageId").html("");
+               $("#dashboardPageId").html("");
+               $("#viewDayPageId").css("display","none");
+                $("#homePageDiv").hide();
+                $("#homePageNav").hide();
+            },
+           error: function (jqXHR) {
+            alert(jqXHR.responseJSON.message);
+
+            },
+
+         });
+
+        }
+
+
 
 
          function deleteDayById(dayId){
@@ -132,6 +168,7 @@ var apiUrl="";
           $("#addDayPageId").html("");
           $("#viewDayPageId").html(jqXHR);
           $("#dashboardPageId").html("");
+           $("#subscriberPageId").html("");
             $.notify("Day Data Deleted", "success");
             },
            error: function (jqXHR) {

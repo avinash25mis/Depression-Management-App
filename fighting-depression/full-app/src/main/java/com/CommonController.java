@@ -10,6 +10,7 @@ import com.configuration.security.dto.AuthRequest;
 import com.dao.CommonRepository;
 import com.dto.DayContentDto;
 import com.dto.LoginDto;
+import com.dto.SelectiveDaysData;
 import com.model.DashboardContent;
 import com.model.DayWiseContent;
 import com.model.StoredFile;
@@ -140,6 +141,12 @@ private CommonService commonService;
         return "viewDayPage";
     }
 
+    @RequestMapping("Subscriber/page")
+    public String page(){
+
+        return "subscribers";
+    }
+
     @RequestMapping("/viewDayPage/data")
     @ResponseBody
     public List viewDataJson()
@@ -161,7 +168,7 @@ private CommonService commonService;
     @GetMapping("/daysData/fromTo")
     @ResponseBody
     @Transactional(readOnly = true)
-    public List viewSelectiveData(@RequestParam Integer startDay,@RequestParam Integer endDay) throws SQLException {
+    public SelectiveDaysData viewSelectiveData(@RequestParam Integer startDay, @RequestParam Integer endDay) throws SQLException {
         List<DayWiseContent> all = commonRepository.findDaysDataInRange(startDay,endDay);
         for(DayWiseContent dayWiseContent:all){
             if(CollectionUtils.isNotEmpty(dayWiseContent.getFileList())){
@@ -174,8 +181,18 @@ private CommonService commonService;
                 }
             }
         }
+        boolean askEmail=false;
+        boolean askNoti=false;
+        SelectiveDaysData selectiveDaysData= new SelectiveDaysData();
+        selectiveDaysData.setData(all);
+        if(CollectionUtils.isNotEmpty(all)){
+             askEmail = all.stream().anyMatch(e -> e.getAskMail()!=null && e.getAskMail());
+             askNoti = all.stream().anyMatch(e ->e.getPopup()!=null &&  e.getPopup());
+        }
+        selectiveDaysData.setHasAskEmail(askEmail);
+        selectiveDaysData.setHasAskFeedBack(askNoti);
 
-        return all;
+        return selectiveDaysData;
     }
 
 

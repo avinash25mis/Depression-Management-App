@@ -274,27 +274,6 @@ if($("#authTokenId").val()!=undefined){
    }
 
 
-$.fn.wrapInTag = function(opts) {
-
-  var tag = 'em',
-      words = opts.words || [],
-      regex = words,
-      replacement = '<'+ tag +'>';
-
-  return this.html(function() {
-    return $(this).html().replace(regex, replacement);
-  });
-};
-
-$('p').wrapInTag({
-  tag: 'em',
-  words: ['**']
-});
-
-$('p').wrapInTag({
-  tag: 'strong',
-  words: ['*']
-});
 
 
      $(".navbar a, footer a[href='#myPage']").on('click', function(event) {

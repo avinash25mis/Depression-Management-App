@@ -8,10 +8,10 @@ or
 An IDE with integrated maven
 
 to build the project and download maven dependencies:
-mvn clean build
+# mvn clean build
 
 to start the server:
-mvn spring-boot:run
+# mvn spring-boot:run
 
 
 url after startup :
